@@ -28,12 +28,13 @@
       --radius-sm: 10px;
       --radius-md: 16px;
       --radius-lg: 24px;
+      --halkhata-crimson: #d93838;
+      --halkhata-gold: #ffd700;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Noto Sans Bengali', sans-serif; }
     body { background-color: var(--bg-studio); color: var(--text-primary); padding-bottom: 100px; -webkit-tap-highlight-color: transparent; }
 
-    /* Premium Sticky Header */
     header {
       background-color: var(--bg-card);
       padding: 14px 20px;
@@ -54,21 +55,20 @@
     .svg-btn:hover { background-color: var(--bg-input); }
     .svg-btn:active { transform: scale(0.92); }
 
-    /* Action Control Icons */
     .filter-active { fill: var(--google-blue) !important; background: var(--google-blue-dark); }
 
-    /* Dropdown alignment to Right */
     .dropdown { position: relative; }
     .dropdown-menu { display: none; position: absolute; right: 0; top: 48px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: 0 12px 32px rgba(0,0,0,0.6); min-width: 240px; overflow: hidden; z-index: 200; animation: fadeIn 0.15s ease-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
     .dropdown-menu a { display: flex; align-items: center; gap: 12px; padding: 14px 18px; color: var(--text-primary); text-decoration: none; font-size: 14px; fill: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.03); transition: background 0.2s; }
     .dropdown-menu a:hover { background: var(--bg-input); fill: var(--google-blue); color: var(--google-blue); }
 
-    .dashboard { padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .studio-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 18px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .dashboard { padding: 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .studio-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 12px 14px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 4px; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s; }
+    .clickable-card:active { transform: scale(0.97); border-color: var(--google-green); }
     .card-span-2 { grid-column: span 2; }
-    .card-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.6px; }
-    .card-val { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+    .card-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
+    .card-val { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
 
     .search-filter-hub { padding: 0 16px; display: flex; gap: 10px; margin-bottom: 16px; align-items: center; }
     .search-wrapper { position: relative; flex: 1; }
@@ -83,15 +83,14 @@
     .cust-meta p { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
     .cust-balance-status { font-size: 15px; font-weight: 700; text-align: right; }
 
-    /* Modals Design Upgrade */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 500; justify-content: center; align-items: center; padding: 16px; backdrop-filter: blur(6px); }
     .modal-content { background: var(--bg-card); width: 100%; max-width: 480px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 24px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
     .modal-header h3 { font-size: 18px; font-weight: 700; color: var(--google-blue); }
     
-    .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
-    .form-control { width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-primary); padding: 14px; border-radius: var(--radius-sm); font-size: 14px; outline: none; transition: all 0.2s; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
+    .form-control { width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-primary); padding: 11px 14px; border-radius: var(--radius-sm); font-size: 14px; outline: none; transition: all 0.2s; }
     .form-control:focus { border-color: var(--google-blue); box-shadow: 0 0 0 3px rgba(168,199,250,0.1); }
     select.form-control { appearance: none; cursor: pointer; }
     
@@ -100,38 +99,88 @@
     .btn-danger { background: rgba(255,107,107,0.15); color: var(--google-red); border: 1px solid var(--google-red); }
     .btn-danger:hover { background: var(--google-red); color: white; }
 
-    .fab { position: fixed; bottom: 105px; right: 20px; background: var(--google-blue); width: 60px; height: 60px; border-radius: 30px; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.5); fill: #09101d; z-index: 90; transition: all 0.2s; }
-    .fab:active { transform: scale(0.9); }
-
-    /* Bottom Navigation Navigation */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; box-shadow: 0 -4px 20px rgba(0,0,0,0.3); }
-    .nav-tab { background: none; border: none; color: var(--text-muted); font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; gap: 6px; fill: var(--text-muted); cursor: pointer; width: 45%; transition: all 0.2s; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; z-index: 100; box-shadow: 0 -4px 20px rgba(0,0,0,0.3); height: 74px; }
+    .nav-tab { background: none; border: none; color: var(--text-muted); font-size: 11px; font-weight: 500; display: flex; flex-direction: column; align-items: center; gap: 4px; fill: var(--text-muted); cursor: pointer; width: 35%; transition: all 0.2s; }
     .nav-tab.active { color: var(--google-blue); fill: var(--google-blue); font-weight: 700; }
+    
+    .nav-center-action { width: 56px; height: 56px; background: linear-gradient(135deg, var(--google-blue), #7ca3e8); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; fill: #090a0f; box-shadow: 0 4px 16px rgba(168, 199, 250, 0.4); transform: translateY(-16px); transition: all 0.2s ease; }
+    .nav-center-action:active { transform: translateY(-16px) scale(0.9); box-shadow: 0 2px 8px rgba(168, 199, 250, 0.2); }
 
-    /* Ledger Traditional Red / Dark Modern Style Table */
-    .halkhata-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; color: var(--text-primary); border-radius: var(--radius-sm); overflow: hidden; }
-    .halkhata-table th, .halkhata-table td { border: 1px solid var(--border-color); padding: 14px 12px; text-align: left; }
-    .halkhata-table th { background: var(--bg-input); color: var(--google-blue); font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+    .table-scroll-wrapper { width: 100%; overflow-x: auto; margin-top: 16px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); }
+    .halkhata-table { width: 100%; border-collapse: collapse; font-size: 13px; color: var(--text-primary); min-width: 500px; }
+    .halkhata-table th, .halkhata-table td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; white-space: nowrap; }
+    .halkhata-table th:nth-child(2), .halkhata-table td:nth-child(2) { width: auto; white-space: normal; min-width: 130px; }
+    .halkhata-table th { background: rgba(217, 56, 56, 0.15) !important; color: var(--google-blue) !important; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-color: rgba(217, 56, 56, 0.2) !important; }
     .halkhata-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.01); }
 
-    /* Calculator Custom Layout */
+    /* Modern Calculator Architecture */
     .calc-ui { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
-    .calc-screen { grid-column: span 4; background: #000; text-align: right; padding: 20px; font-size: 26px; color: var(--google-green); border-radius: var(--radius-sm); font-family: monospace; min-height: 68px; word-break: break-all; box-shadow: inset 0 2px 10px rgba(0,0,0,0.8); }
-    .calc-btn { background: var(--bg-input); border: 1px solid var(--border-color); color: white; padding: 18px; font-size: 18px; font-weight: 600; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.1s; }
-    .calc-btn:active { background: var(--border-color); }
+    .calc-screen { grid-column: span 4; background: #050608; text-align: right; padding: 22px 16px; font-size: 28px; color: var(--google-green); border-radius: var(--radius-sm); font-family: monospace; min-height: 76px; word-break: break-all; box-shadow: inset 0 4px 12px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.03); display: flex; flex-direction: column; justify-content: center; justify-content: flex-end; }
+    .calc-btn { background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-primary); padding: 16px; font-size: 19px; font-weight: 600; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.1s ease; display: flex; align-items: center; justify-content: center; }
+    .calc-btn:active { background: var(--border-color); transform: scale(0.95); }
+    .calc-btn.op-btn { color: var(--google-blue); background: var(--google-blue-dark); }
+    .calc-btn.clear-btn { color: var(--google-red); background: rgba(255,107,107,0.1); }
+    .calc-btn.eq-btn { background: var(--google-green); color: #000; grid-row: span 2; height: calc(100% + 10px); }
     
     .lang-switcher { font-size: 12px; font-weight: 700; border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 20px; background: var(--bg-input); cursor: pointer; color: var(--google-blue); display: flex; align-items: center; gap: 6px; }
-    .chart-btn-group { display: flex; gap: 8px; margin-bottom: 16px; }
-    .chart-btn { flex: 1; padding: 10px; background: var(--bg-input); border: 1px solid var(--border-color); color: white; border-radius: var(--radius-sm); cursor: pointer; font-size: 12px; font-weight: 600; }
-    .chart-btn.active { background: var(--google-blue); color: black; }
+    
+    /* Modern Premium Analytical Filter Tabs */
+    .chart-btn-group { display: flex; gap: 6px; margin-bottom: 18px; background: rgba(255,255,255,0.03); padding: 4px; border-radius: var(--radius-md); border: 1px solid var(--border-color); }
+    .chart-btn { flex: 1; padding: 12px; background: transparent; border: none; color: var(--text-muted); border-radius: var(--radius-sm); cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.25s ease; }
+    .chart-btn.active { background: var(--bg-input); color: var(--google-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); }
 
-    /* Timeline Styling Custom Upgrade */
     .timeline-item { border-left: 3px solid var(--border-color); padding-left: 16px; position: relative; margin-bottom: 12px; padding-bottom: 4px; }
     .timeline-item::before { content: ''; position: absolute; left: -7px; top: 5px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border-color); }
     .timeline-due { border-left-color: var(--google-red); }
     .timeline-due::before { border-color: var(--google-red); background: var(--google-red); }
     .timeline-dep { border-left-color: var(--google-green); }
     .timeline-dep::before { border-color: var(--google-green); background: var(--google-green); }
+
+    .halkhata-card-premium {
+      background: linear-gradient(135deg, #1f1111, #15161b) !important;
+      border: 1px solid rgba(217, 56, 56, 0.25) !important;
+      box-shadow: 0 6px 20px rgba(217, 56, 56, 0.08) !important;
+      padding: 14px 16px !important;
+    }
+    .halkhata-live-reporter {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+    .live-badge {
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      font-size: 12px;
+    }
+    .live-badge span {
+      display: block;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 1px;
+    }
+    .live-badge strong { font-size: 14px; }
+    .traditional-header-label {
+      color: var(--halkhata-gold) !important;
+      border-bottom: 1px dashed rgba(255,215,0,0.15);
+      padding-bottom: 4px;
+      margin-bottom: 10px !important;
+    }
+
+    /* Dialogue Confirm Overlay Screen UI */
+    .dialogue-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); }
+    .dialogue-box { background: var(--bg-card); border: 1px solid var(--border-color); width: 100%; max-width: 360px; border-radius: var(--radius-lg); padding: 24px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+    .dialogue-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; }
+    .dialogue-icon.del { background: rgba(255,107,107,0.15); fill: var(--google-red); }
+    .dialogue-icon.edit { background: rgba(168,199,250,0.15); fill: var(--google-blue); }
+    .dialogue-msg { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px; line-height: 1.5; }
+    .dialogue-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .btn-choice { padding: 12px; border-radius: var(--radius-sm); border: none; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-choice.yes-btn { background: var(--google-green); color: #000; }
+    .btn-choice.no-btn { background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-primary); }
   </style>
 </head>
 <body>
@@ -172,7 +221,7 @@
             <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
             <span class="lang-node" data-bn="কপিরাইট বিবরণ" data-en="Copyright Specs">কপিরাইট বিবরণ</span>
           </a>
-          <a href="#" onclick="confirm('অ্যাপ্লিকেশনটি বন্ধ করতে চান?') ? window.close() : null">
+          <a href="#" onclick="triggerExitConfirmation()">
             <svg viewBox="0 0 24 24" width="18" height="18"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
             <span class="lang-node" data-bn="Exit এক্সিট" data-en="Exit App">Exit এক্সিট</span>
           </a>
@@ -203,15 +252,15 @@
         <div class="card-label lang-node" data-bn="বাকি থাকা কাস্টমার" data-en="Dues Active Customers">বাকি কাস্টমার</div>
         <div class="card-val" style="color:var(--google-red);" id="val-custWithDue">0</div>
       </div>
-      <div class="studio-card card-span-2">
-        <div class="card-label lang-node" data-bn="বাকি মুক্ত কাস্টমার সংখ্যা" data-en="Due Free Safe Customers">পরিশোধ কাস্টমার</div>
+      <div class="studio-card card-span-2 clickable-card" onclick="filterPaidCustomersOnly()" title="পরিশোধ কাস্টমারদের তালিকা দেখতে ক্লিক করুন">
+        <div class="card-label lang-node" data-bn="বাকি মুক্ত কাস্টমার সংখ্যা (তালিকা দেখতে ক্লিক করুন)" data-en="Due Free Safe Customers (Click to view)">পরিশোধ কাস্টমার</div>
         <div class="card-val" style="color:var(--google-green);" id="val-custNoDue">0</div>
       </div>
     </div>
 
     <div class="search-filter-hub">
       <div class="search-wrapper">
-        <input type="text" id="search-core" class="search-bar" placeholder="কাস্টমার নাম বা মোবাইল নাম্বার দিয়ে খুঁজুন..." oninput="filterCustomerSystem()">
+        <input type="text" id="search-core" class="search-bar" placeholder="কাস্টমার নাম বা মোবাইল নম্বর দিয়ে খুঁজুন..." oninput="filterCustomerSystem()">
       </div>
       <button class="svg-btn" onclick="toggleSortAmount()" id="btn-sort-amount" title="পরিমাণ ফিল্টার">
         <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg>
@@ -227,11 +276,11 @@
   </main>
 
   <main id="view-halkhata" style="display:none; padding:16px;">
-    <h3 style="margin-bottom:16px; font-weight:700; display:flex; align-items:center; gap:8px;" class="lang-node" data-bn="📕 ডিজিটাল শুভ হালখাতা" data-en="📕 Traditional Halkhata">📕 ডিজিটাল শুভ হালখাতা</h3>
+    <h3 style="margin-bottom:16px; font-weight:700; display:flex; align-items:center; gap:8px;" class="lang-node" data-bn="📖 শুভ হালখাতা" data-en="📖 Shuvho Halkhata">📖 শুভ হালখাতা</h3>
     
-    <div class="studio-card" style="margin-bottom:20px; background: var(--bg-card); border-color: rgba(168,199,250,0.15);">
+    <div class="studio-card halkhata-card-premium" style="margin-bottom:20px;">
       <div class="form-group">
-        <label class="lang-node" data-bn="খাতা টাইপ / কাস্টমার সার্চ ইঞ্জিন" data-en="Search Ledger Customer">খাতা টাইপ / কাস্টমার সার্চ ইঞ্জিন</label>
+        <label class="lang-node traditional-header-label" data-bn="খাতা টাইপ / কাস্টমার সার্চ ইঞ্জিন" data-en="Search Ledger Customer">কাস্টমার সার্চ</label>
         <input type="text" id="hk-search-input" class="form-control" placeholder="খাতার কাস্টমার খুঁজতে নাম টাইপ করুন..." oninput="autoSearchHalkhataCust(this.value)">
         <div id="hk-search-results" style="background:var(--bg-input); border: 1px solid var(--border-color); border-radius:var(--radius-sm); margin-top:6px; max-height:160px; overflow-y:auto; display:none;"></div>
       </div>
@@ -239,9 +288,21 @@
       <input type="hidden" id="hk-cust-id" value="OUTSIDE-CUST">
 
       <div class="form-group">
-        <label class="lang-node" data-bn="গ্রাহকের পূর্ণ নাম *" data-en="Customer Full Name *">গ্রাহকের পূর্ণ নাম *</label>
+        <label class="lang-node" data-bn="গ্রাহকের পূর্ণ নাম *" data-en="Customer Full Name *">গ্রাহকের নাম *</label>
         <input type="text" id="hk-name" class="form-control" placeholder="নতুন নাম লিখুন অথবা উপর থেকে সিলেক্ট করুন">
       </div>
+
+      <div class="halkhata-live-reporter">
+        <div class="live-badge">
+          <span>পূর্বের মোট বাকি</span>
+          <strong id="hk-live-old-due" style="color: var(--google-red);">৳ 0.00</strong>
+        </div>
+        <div class="live-badge">
+          <span>হিসাব বিবরণী</span>
+          <strong id="hk-live-status-text" style="color: var(--text-muted);">কোনো ইনপুট নেই</strong>
+        </div>
+      </div>
+
       <div class="form-group">
         <label class="lang-node" data-bn="ঠিকানা / গ্রাম *" data-en="Address / Village *">ঠিকানা / গ্রাম *</label>
         <input type="text" id="hk-address" class="form-control" placeholder="গ্রামের নাম">
@@ -252,15 +313,15 @@
       </div>
       <div class="form-group">
         <label class="lang-node" data-bn="হালখাতা ক্যাশ জমার পরিমাণ (টাকা) *" data-en="Halkhata Deposit Amount *">হালখাতা ক্যাশ জমার পরিমাণ (টাকা) *</label>
-        <input type="number" id="hk-amount" class="form-control" placeholder="৳ 0.00" style="font-weight:700; color:var(--google-green); font-size:16px;">
+        <input type="number" id="hk-amount" class="form-control" placeholder="৳ 0.00" style="font-weight:700; color:var(--google-green); font-size:16px;" oninput="calculateHalkhataLiveRemains()">
       </div>
-      <button class="btn" onclick="commitHalkhataPayment()" style="background:var(--google-blue);">
+      <button class="btn" onclick="commitHalkhataPayment()" style="background:var(--halkhata-crimson); color: white;">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 11c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 2c0-3.31-2.69-6-6-6s-6 2.69-6 6c0 2.22 1.21 4.15 3 5.19l1-1.74c-1.19-.69-2-1.99-2-3.45 0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.46-.81 2.76-2 3.45l1 1.74c1.79-1.04 3-2.97 3-5.19z"/></svg>
-        <span class="lang-node" data-bn="হালখাতা খতিয়ানে এন্ট্রি করুন" data-en="Submit to Halkhata Ledger">হালখাতা খতিয়ানে এন্ট্রি করুন</span>
+        <span class="lang-node" data-bn="হালখাতা খতিয়ানে এন্ট্রি করুন" data-en="Submit to Halkhata Ledger">হালখাতা ক্যাশ এন্ট্রি করুন</span>
       </button>
     </div>
 
-    <div style="overflow-x:auto;">
+    <div class="table-scroll-wrapper">
       <table class="halkhata-table">
         <thead>
           <tr>
@@ -278,14 +339,10 @@
     <div id="hk-pool-counter" style="margin-top:18px; text-align:right; font-size:16px; font-weight:700; color:var(--google-green);">সর্বমোট হালখাতা কালেকশন: ৳0</div>
   </main>
 
-  <button class="fab" onclick="openModalWindow('modal-add')" title="নতুন গ্রাহক সংযুক্ত করুন">
-    <svg viewBox="0 0 24 24" width="28" height="28"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-  </button>
-
   <div class="modal-overlay" id="modal-add">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="lang-node" data-bn="নতুন গ্রাহক অ্যাকাউন্ট খোলেন" data-en="Add New Customer Accounts">নতুন গ্রাহক অ্যাকাউন্ট খোলেন</h3>
+        <h3 class="lang-node" data-bn="নতুন গ্রাহক অ্যাকাউন্ট খোলেন" data-en="Add New Customer Accounts">নতুন অ্যাকাউন্ট</h3>
         <button class="svg-btn" onclick="closeModalWindow('modal-add')">
           <svg viewBox="0 0 24 24" width="24" height="24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
@@ -347,8 +404,8 @@
           <input type="text" id="prof-father" class="form-control" placeholder="পিতার নাম">
         </div>
         <div style="display:flex; gap:10px;">
-          <button class="btn" style="padding:12px; font-size:12px;" onclick="saveCustomerEditData()">পরিবর্তন সংরক্ষণ</button>
-          <button class="btn btn-danger" style="padding:12px; font-size:12px;" onclick="triggerCustomerDeletion()">মুছে ফেলুন</button>
+          <button class="btn" style="padding:12px; font-size:12px;" onclick="triggerCustomerEditConfirmation()">পরিবর্তন সংরক্ষণ</button>
+          <button class="btn btn-danger" style="padding:12px; font-size:12px;" onclick="triggerCustomerDeletionConfirmation()">মুছে ফেলুন</button>
         </div>
       </div>
 
@@ -380,7 +437,7 @@
   </div>
 
   <div class="modal-overlay" id="modal-calc">
-    <div class="modal-content" style="max-width:350px;">
+    <div class="modal-content" style="max-width:350px; background: #0e1014;">
       <div class="modal-header">
         <h3 class="lang-node" data-bn="ডিজিটাল ক্যালকুলেটর" data-en="Internal Calculator">ডিজিটাল ক্যালকুলেটর</h3>
         <button class="svg-btn" onclick="closeModalWindow('modal-calc')">
@@ -389,22 +446,30 @@
       </div>
       <div id="calc-display" class="calc-screen">0</div>
       <div class="calc-ui">
-        <button class="calc-btn" onclick="inputCalc('C')">C</button>
-        <button class="calc-btn" onclick="inputCalc('/')">/</button>
-        <button class="calc-btn" onclick="inputCalc('*')">*</button>
-        <button class="calc-btn" onclick="inputCalc('-')">-</button>
+        <button class="calc-btn clear-btn" onclick="inputCalc('C')">C</button>
+        <button class="calc-btn op-btn" onclick="inputCalc('(')">(</button>
+        <button class="calc-btn op-btn" onclick="inputCalc(')')">)</button>
+        <button class="calc-btn op-btn" onclick="inputCalc('/')">÷</button>
+        
         <button class="calc-btn" onclick="inputCalc('7')">7</button>
         <button class="calc-btn" onclick="inputCalc('8')">8</button>
         <button class="calc-btn" onclick="inputCalc('9')">9</button>
-        <button class="calc-btn" onclick="inputCalc('+')">+</button>
+        <button class="calc-btn op-btn" onclick="inputCalc('*')">×</button>
+        
         <button class="calc-btn" onclick="inputCalc('4')">4</button>
         <button class="calc-btn" onclick="inputCalc('5')">5</button>
         <button class="calc-btn" onclick="inputCalc('6')">6</button>
-        <button class="calc-btn" onclick="inputCalc('=')">=</button>
+        <button class="calc-btn op-btn" onclick="inputCalc('-')">-</button>
+        
         <button class="calc-btn" onclick="inputCalc('1')">1</button>
         <button class="calc-btn" onclick="inputCalc('2')">2</button>
         <button class="calc-btn" onclick="inputCalc('3')">3</button>
+        <button class="calc-btn op-btn" onclick="inputCalc('+')">+</button>
+        
         <button class="calc-btn" onclick="inputCalc('0')">0</button>
+        <button class="calc-btn" onclick="inputCalc('.')">.</button>
+        <button class="calc-btn clear-btn" onclick="inputCalc('B')" title="একটি সংখ্যা মুছুন">⌫</button>
+        <button class="calc-btn eq-btn" onclick="inputCalc('=')">=</button>
       </div>
     </div>
   </div>
@@ -428,31 +493,57 @@
     </div>
   </div>
 
+  <div class="dialogue-overlay" id="custom-confirm-window">
+    <div class="dialogue-box">
+      <div class="dialogue-icon" id="dialogue-icon-node">
+        </div>
+      <div class="dialogue-msg" id="dialogue-message-node">কি আপনি করতে চান নিশ্চিত?</div>
+      <div class="dialogue-actions">
+        <button class="btn-choice no-btn" onclick="respondToDialogueChoice(false)">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          <span>No</span>
+        </button>
+        <button class="btn-choice yes-btn" onclick="respondToDialogueChoice(true)">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          <span>Yes</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <nav class="bottom-nav">
     <button class="nav-tab active" id="tab-home" onclick="navigateTo('home')">
       <svg viewBox="0 0 24 24" width="24" height="24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
       <span class="lang-node" data-bn="হোম ড্যাশবোর্ড" data-en="Dashboard">ড্যাশবোর্ড</span>
     </button>
+    
+    <button class="nav-center-action" onclick="openModalWindow('modal-add')" title="নতুন গ্রাহক সংযুক্ত করুন">
+      <svg viewBox="0 0 24 24" width="28" height="28"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+    </button>
+    
     <button class="nav-tab" id="tab-halkhata" onclick="navigateTo('halkhata')">
-      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-      <span class="lang-node" data-bn="শুভ হালখাতা" data-en="Shuvho Halkhata">শুভ হালখাতা</span>
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5-1.95 0-4.05.4-5.5 1.5v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.1-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.35-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-3.45.3-4.5 1V7c1.05-.7 2.8-1 4.5-1 1.2 0 2.4.15 3.5.5v11z"/></svg>
+      <span class="lang-node" data-bn="शुभ हलखाता" data-en="Shuvho Halkhata">শুভ হালখাতা</span>
     </button>
   </nav>
 
   <script>
-    // গুরুত্বপূর্ণ: আপনার Apps Script ডেপ্লয় করার পর প্রাপ্ত Web App URL-টি নিচের ফাকা কোটেশনে অবশই বসাবেন।
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwXZ_IPkrQp_jyPeM5kcHGZUpaVIZOFkJ_4rrrgjg96v5hW13v6Vsraba9P7oi_bIMFnQ/exec"; 
 
     let dbState = { customers: [] };
     let selectedCustomerId = null;
     let languageMode = 'bn';
     
-    // Sorting Toggles States
-    let amountSortState = 0; // 0: None, 1: LowToHigh, 2: HighToLow
-    let timelineSortState = 0; // 0: None, 1: NewToOld, 2: OldToNew
+    let currentHalkhataSelectedDue = 0;
+    
+    let amountSortState = 0; 
+    let timelineSortState = 0; 
     
     let globalChartInstance = null;
     let cachedAnalyticsData = null;
+
+    // Dialogue confirmation callback engine controller variable
+    let currentDialogueResolver = null;
 
     document.addEventListener("DOMContentLoaded", () => {
       syncBackendData();
@@ -496,6 +587,29 @@
     function openModalWindow(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModalWindow(id) { document.getElementById(id).style.display = 'none'; }
 
+    // Custom Confirmation Dialog Populator Function
+    function renderCustomConfirmBox(message, mode = "edit") {
+      document.getElementById('dialogue-message-node').innerText = message;
+      const iconContainer = document.getElementById('dialogue-icon-node');
+      iconContainer.className = `dialogue-icon ${mode}`;
+      
+      if(mode === "del") {
+        iconContainer.innerHTML = `<svg viewBox="0 0 24 24" width="32" height="32"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
+      } else {
+        iconContainer.innerHTML = `<svg viewBox="0 0 24 24" width="32" height="32"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>`;
+      }
+      
+      document.getElementById('custom-confirm-window').style.display = 'flex';
+      return new Promise((resolve) => {
+        currentDialogueResolver = resolve;
+      });
+    }
+
+    function respondToDialogueChoice(decisionValue) {
+      document.getElementById('custom-confirm-window').style.display = 'none';
+      if(currentDialogueResolver) currentDialogueResolver(decisionValue);
+    }
+
     async function syncBackendData() {
       document.getElementById('customer-inject-wall').innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:20px;">ডাটা সিঙ্ক হচ্ছে...</p>`;
       const data = await apiRequest("getDashboard");
@@ -537,7 +651,14 @@
       document.getElementById('customer-inject-wall').innerHTML = html;
     }
 
-    /* Fixed & Re-engineered Sorting Engine Filters */
+    // Special functionality to click and display zero due safe customers
+    function filterPaidCustomersOnly() {
+      let safeCustomers = dbState.customers.filter(c => (parseFloat(c[6]) || 0) === 0);
+      renderCustomerList(safeCustomers);
+      document.getElementById('search-core').value = '';
+      alert(`মোট ${safeCustomers.length} জন বাকিমুক্ত পরিশোধ কাস্টমারের তালিকা লোড করা হয়েছে।`);
+    }
+
     function toggleSortAmount() {
       timelineSortState = 0; 
       document.getElementById('btn-sort-timeline').classList.remove('filter-active');
@@ -546,11 +667,11 @@
       let data = [...dbState.customers];
       
       if(amountSortState === 0 || amountSortState === 2) {
-        amountSortState = 1; // Low to High
+        amountSortState = 1; 
         btn.classList.add('filter-active');
         data.sort((a, b) => (parseFloat(a[6]) || 0) - (parseFloat(b[6]) || 0));
       } else {
-        amountSortState = 2; // High to Low
+        amountSortState = 2; 
         btn.classList.add('filter-active');
         data.sort((a, b) => (parseFloat(b[6]) || 0) - (parseFloat(a[6]) || 0));
       }
@@ -565,14 +686,12 @@
       let data = [...dbState.customers];
       
       if(timelineSortState === 0 || timelineSortState === 2) {
-        timelineSortState = 1; // New to Old
+        timelineSortState = 1; 
         btn.classList.add('filter-active');
-        // Standard reverse assuming sync order is old to new
         data.reverse();
       } else {
-        timelineSortState = 2; // Old to New
+        timelineSortState = 2; 
         btn.classList.add('filter-active');
-        // Stays in natural state
       }
       renderCustomerList(data);
     }
@@ -633,7 +752,6 @@
       renderCustomerList(matched);
     }
 
-    /* Profile View & Detailed Timeline History UI Updates */
     async function fireProfileView(id) {
       selectedCustomerId = id;
       let c = dbState.customers.find(item => item[0] === id);
@@ -671,29 +789,41 @@
       document.getElementById('timeline-box').innerHTML = html;
     }
 
-    async function saveCustomerEditData() {
-      let p = {
-        id: selectedCustomerId,
-        name: document.getElementById('prof-name').value,
-        mobile: document.getElementById('prof-mobile').value,
-        village: document.getElementById('prof-village').value,
-        fatherName: document.getElementById('prof-father').value
-      };
-      let res = await apiRequest("updateCustomer", p);
-      if(res.status === 'success') {
-        closeModalWindow('modal-profile');
-        syncBackendData();
+    // Trigger Custom dialogue confirmation box for saving edits
+    async function triggerCustomerEditConfirmation() {
+      let isConfirmed = await renderCustomConfirmBox("আপনি কি সত্যিই কাস্টমারের এই নতুন ব্যক্তিগত তথ্য পরিবর্তন করে সংরক্ষণ করতে চান?", "edit");
+      if(isConfirmed) {
+        let p = {
+          id: selectedCustomerId,
+          name: document.getElementById('prof-name').value,
+          mobile: document.getElementById('prof-mobile').value,
+          village: document.getElementById('prof-village').value,
+          fatherName: document.getElementById('prof-father').value
+        };
+        let res = await apiRequest("updateCustomer", p);
+        if(res.status === 'success') {
+          closeModalWindow('modal-profile');
+          syncBackendData();
+        }
       }
     }
 
-    async function triggerCustomerDeletion() {
-      if(confirm("আপনি কি নিশ্চিতভাবে এই গ্রাহককে ডিলিট করতে চান?")) {
+    // Trigger Custom dialogue confirmation box for deleting records
+    async function triggerCustomerDeletionConfirmation() {
+      let isConfirmed = await renderCustomConfirmBox("সতর্কতা! আপনি কি নিশ্চিতভাবে এই গ্রাহকের অ্যাকাউন্ট এবং সমস্ত খতিয়ান ডাটাবেস থেকে মুছে ফেলতে চান?", "del");
+      if(isConfirmed) {
         let res = await apiRequest("deleteCustomer", { id: selectedCustomerId });
         if(res.status === 'success') {
           closeModalWindow('modal-profile');
           syncBackendData();
         }
       }
+    }
+
+    async function triggerExitConfirmation() {
+      toggleDropdown();
+      let isConfirmed = await renderCustomConfirmBox("আপনি কি অ্যাপ্লিকেশন মডিউলটি এই সেশন থেকে বন্ধ করতে চান?", "del");
+      if(isConfirmed) { window.close(); }
     }
 
     async function postNewTransaction() {
@@ -721,25 +851,65 @@
       let matches = dbState.customers.filter(c => c[1].toLowerCase().includes(val.toLowerCase()));
       if(matches.length === 0) {
         container.style.display = 'none';
-        document.getElementById('hk-cust-id').value = "OUTSIDE-CUST";
+        resetHalkhataLiveFields();
         return;
       }
       
       let html = '';
       matches.forEach(m => {
-        html += `<div style="padding:12px; cursor:pointer; border-bottom:1px solid var(--border-color); font-size:13px;" onclick="selectHalkhataCustomer('${m[0]}','${m[1]}','${m[3]}','${m[4]}')">👤 ${m[1]} [${m[2]}]</div>`;
+        let currentDue = parseFloat(m[6]) || 0;
+        html += `<div style="padding:12px; cursor:pointer; border-bottom:1px solid var(--border-color); font-size:13px;" onclick="selectHalkhataCustomer('${m[0]}','${m[1]}','${m[3]}','${m[4]}', ${currentDue})">👤 ${m[1]} [${m[2]}] (বাকি: ৳${currentDue.toFixed(2)})</div>`;
       });
       container.innerHTML = html;
       container.style.display = 'block';
     }
 
-    function selectHalkhataCustomer(id, name, village, father) {
+    function selectHalkhataCustomer(id, name, village, father, dueAmount) {
       document.getElementById('hk-cust-id').value = id;
       document.getElementById('hk-search-input').value = name;
       document.getElementById('hk-name').value = name;
       document.getElementById('hk-address').value = village || '';
       document.getElementById('hk-father').value = father || '';
       document.getElementById('hk-search-results').style.display = 'none';
+      
+      currentHalkhataSelectedDue = dueAmount;
+      document.getElementById('hk-live-old-due').innerText = "৳ " + dueAmount.toFixed(2);
+      calculateHalkhataLiveRemains();
+    }
+
+    function calculateHalkhataLiveRemains() {
+      let inputAmount = parseFloat(document.getElementById('hk-amount').value) || 0;
+      let statusBox = document.getElementById('hk-live-status-text');
+      
+      if (document.getElementById('hk-cust-id').value === "OUTSIDE-CUST") {
+        statusBox.innerText = "নতুন কাস্টমার এন্ট্রি";
+        statusBox.style.color = "var(--google-blue)";
+        return;
+      }
+      
+      let calculation = currentHalkhataSelectedDue - inputAmount;
+      
+      if (inputAmount === 0) {
+        statusBox.innerText = "টাকা ইনপুট করুন";
+        statusBox.style.color = "var(--text-muted)";
+      } else if (calculation === 0) {
+        statusBox.innerText = "পুরোপুরি পরিশোধ";
+        statusBox.style.color = "var(--google-green)";
+      } else if (calculation < 0) {
+        statusBox.innerText = "জমা অতিরিক্ত: ৳" + Math.abs(calculation).toFixed(2);
+        statusBox.style.color = "var(--google-blue)";
+      } else {
+        statusBox.innerText = "বাকি থাকবে: ৳" + calculation.toFixed(2);
+        statusBox.style.color = "var(--google-red)";
+      }
+    }
+
+    function resetHalkhataLiveFields() {
+      document.getElementById('hk-cust-id').value = "OUTSIDE-CUST";
+      currentHalkhataSelectedDue = 0;
+      document.getElementById('hk-live-old-due').innerText = "৳ 0.00";
+      document.getElementById('hk-live-status-text').innerText = "কোনো ইনপুট নেই";
+      document.getElementById('hk-live-status-text').style.color = "var(--text-muted)";
     }
 
     async function commitHalkhataPayment() {
@@ -761,7 +931,7 @@
         document.getElementById('hk-address').value = '';
         document.getElementById('hk-father').value = '';
         document.getElementById('hk-amount').value = '';
-        document.getElementById('hk-cust-id').value = 'OUTSIDE-CUST';
+        resetHalkhataLiveFields();
         syncBackendData();
       }
     }
@@ -847,23 +1017,50 @@
         document.getElementById('lang-btn-text').innerText = "বাং";
       } else {
         document.getElementById('main-app-title').innerText = "নওশিন স্টোর এন্ড চাউল ঘর";
-        document.getElementById('search-core').placeholder = "কাস্টমার নাম বা মোবাইল নাম্বার দিয়ে খুঁজুন...";
+        document.getElementById('search-core').placeholder = "কাস্টমার নাম বা মোবাইল নম্বর দিয়ে খুঁজুন...";
         document.getElementById('lang-btn-text').innerText = "EN";
       }
     }
 
     function openCalculator() { openModalWindow('modal-calc'); toggleDropdown(); }
+    
+    // High-Quality Dynamic Internal Calculator Controller Engine with Backspace
     let calcString = '';
     function inputCalc(val) {
       const display = document.getElementById('calc-display');
-      if(val === 'C') { calcString = ''; display.innerText = '0'; }
+      if(val === 'C') { 
+        calcString = ''; 
+        display.innerText = '0'; 
+      }
+      else if(val === 'B') { 
+        // Engine Character Backspace Module
+        if(calcString.length > 0) {
+          calcString = calcString.slice(0, -1);
+          display.innerText = calcString || '0';
+        }
+      }
       else if(val === '=') {
-        try { display.innerText = eval(calcString); calcString = display.innerText; } 
-        catch { display.innerText = 'Error'; calcString = ''; }
-      } else { calcString += val; display.innerText = calcString; }
+        try { 
+          if(!calcString) return;
+          // Security filter to clean expressions before math compilation evaluation
+          let formattedExpr = calcString.replace(/×/g, '*').replace(/÷/g, '/');
+          display.innerText = eval(formattedExpr); 
+          calcString = display.innerText; 
+        } 
+        catch { 
+          display.innerText = 'Error'; 
+          calcString = ''; 
+        }
+      } else { 
+        if (display.innerText === '0' && val !== '.' && val !== '+' && val !== '-' && val !== '*' && val !== '/') {
+          calcString = val;
+        } else {
+          calcString += val; 
+        }
+        display.innerText = calcString; 
+      }
     }
 
-    // PWA Support Implementation Logic Trigger
     function registerPWA() {
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
