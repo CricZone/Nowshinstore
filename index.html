@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#1b1b1f">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuCmqOCmruCmtiCmuOCnjeCmnYpSgOCmnyDgpqYgQ2hhdWwgR2hvciIsCiAgInNob3J0X25hbWUiOiAi4Kao4Km24Ka_4KaoIOCmuOCnjeCmnYpSIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwZjEwMTQiLAogICJ0aGVtZV9jb2xvciI6ICIxYjFiMWYiCn0=">
+  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuCmqOCmruCmtiCmuOCnjeCmnYpSIgOCmnyDgpqYgQ2hhdWwgR2hvciIsCiAgInNob3J0X25hbWUiOiAi4Kao4Km24Ka_4KaoIOCmuOCnjeCmnYpSIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwZjEwMTQiLAogICJ0aGVtZV9jb2xvciI6ICIxYjFiMWYiCn0=">
 
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -22,6 +22,7 @@
       --google-blue-dark: #38465e;
       --google-green: #3dd598;
       --google-red: #ff6b6b;
+      --google-amber: #ffb74d;
       --text-primary: #f1f3f9;
       --text-muted: #94a3b8;
       --border-color: #2e313a;
@@ -34,6 +35,33 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Noto Sans Bengali', sans-serif; }
     body { background-color: var(--bg-studio); color: var(--text-primary); padding-bottom: 100px; -webkit-tap-highlight-color: transparent; }
+
+    /* Modern Scrolling Offline Banner Style */
+    .offline-marquee-banner {
+      display: none;
+      background: linear-gradient(90deg, #b71c1c, #e65100);
+      color: #ffffff;
+      padding: 6px 0;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      position: sticky;
+      top: 69px;
+      z-index: 99;
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .offline-marquee-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: smoothMarquee 25s linear infinite;
+    }
+    @keyframes smoothMarquee {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
 
     header {
       background-color: var(--bg-card);
@@ -64,7 +92,7 @@
     .dropdown-menu a:hover { background: var(--bg-input); fill: var(--google-blue); color: var(--google-blue); }
 
     .dashboard { padding: 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .studio-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 12px 14px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 4px; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s; }
+    .studio-card background: var(--bg-card); border: 1px solid var(--border-color); padding: 12px 14px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 4px; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s; }
     .clickable-card:active { transform: scale(0.97); border-color: var(--google-green); }
     .card-span-2 { grid-column: span 2; }
     .card-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
@@ -229,6 +257,12 @@
       </div>
     </div>
   </header>
+
+  <div class="offline-marquee-banner" id="premium-offline-banner">
+    <div class="offline-marquee-text">
+      ⚠️ আপনি বর্তমানে অফলাইন মোডে আছেন। নতুন ট্রানজেকশন বা কাস্টমার ডেটা সাময়িকভাবে লোকাল স্টোরেজে সুরক্ষিত থাকবে এবং ইন্টারনেট আসার সাথে সাথে স্বয়ংক্রিয়ভাবে গুগল শিটে ব্যাকআপ হয়ে যাবে।
+    </div>
+  </div>
 
   <main id="view-home">
     <div class="dashboard">
@@ -542,15 +576,149 @@
     let globalChartInstance = null;
     let cachedAnalyticsData = null;
 
-    // Dialogue confirmation callback engine controller variable
     let currentDialogueResolver = null;
 
     document.addEventListener("DOMContentLoaded", () => {
+      // Initialize Offline Engine Watchers
+      initOfflineEngineWatchers();
       syncBackendData();
       registerPWA();
     });
 
+    // Premium High-Performance Offline Synchronization Engine
+    function initOfflineEngineWatchers() {
+      // Monitor real-time connectivity status changes
+      window.addEventListener('online', () => {
+        document.getElementById('premium-offline-banner').style.display = 'none';
+        processOfflineQueue();
+      });
+      
+      window.addEventListener('offline', () => {
+        document.getElementById('premium-offline-banner').style.display = 'block';
+      });
+
+      // Initial check on load
+      if (!navigator.onLine) {
+        document.getElementById('premium-offline-banner').style.display = 'block';
+      }
+    }
+
+    function getOfflineQueue() {
+      return JSON.parse(localStorage.getItem('naushin_offline_queue')) || [];
+    }
+
+    function saveOfflineQueue(queue) {
+      localStorage.setItem('naushin_offline_queue', JSON.stringify(queue));
+    }
+
+    function addToOfflineQueue(action, payload) {
+      const queue = getOfflineQueue();
+      queue.push({ action, payload, id: Date.now() });
+      saveOfflineQueue(queue);
+      
+      // Update local UI immediately for premium user experience
+      optimisticLocalUpdate(action, payload);
+    }
+
+    function optimisticLocalUpdate(action, payload) {
+      if (action === "saveCustomer") {
+        // Construct simulated row inside state
+        const mockId = "MOCK-" + Date.now();
+        const mockRow = [mockId, payload.name, payload.mobile, payload.village, payload.fatherName, payload.prodDetails, parseFloat(payload.initialDue)||0, 0];
+        dbState.customers.unshift(mockRow);
+        renderCustomerList(dbState.customers);
+        updateDashboardCalculations();
+      }
+      else if (action === "addTransaction") {
+        let c = dbState.customers.find(item => item[0] === payload.custId);
+        if(c) {
+          let amt = parseFloat(payload.amount) || 0;
+          if(payload.type === 'Due') c[6] = (parseFloat(c[6]) || 0) + amt;
+          if(payload.type === 'Deposit') c[7] = (parseFloat(c[7]) || 0) + amt;
+          renderCustomerList(dbState.customers);
+          updateDashboardCalculations();
+        }
+      }
+      else if (action === "submitHalkhata") {
+        // Optimistically feed the halkhata UI tables directly
+        const tableBody = document.getElementById('halkhata-rows-target');
+        const rowCount = tableBody.children.length;
+        const currentCleanCount = (tableBody.innerText.includes("কোনো রেকর্ড")) ? 0 : rowCount;
+        
+        if(currentCleanCount === 0) tableBody.innerHTML = '';
+        
+        const mockHkRow = `
+          <tr style="border-left: 3px solid var(--google-amber);">
+            <td>${currentCleanCount + 1}</td>
+            <td><strong>${payload.custName} (অফলাইন)</strong></td>
+            <td>${payload.fatherName || 'N/A'}</td>
+            <td>${payload.address || 'N/A'}</td>
+            <td style="color:var(--google-green); font-weight:700;">৳${parseFloat(payload.amount).toFixed(2)}</td>
+            <td><span style="background:rgba(255,183,77,0.15); color:var(--google-amber); padding:4px 8px; border-radius:4px; font-size:11px; font-weight:700;">পেন্ডিং সিঙ্ক</span></td>
+          </tr>
+        `;
+        tableBody.insertAdjacentHTML('beforeend', mockHkRow);
+      }
+    }
+
+    function updateDashboardCalculations() {
+      let totalDue = 0, totalCust = dbState.customers.length, custWithDue = 0, custNoDue = 0;
+      dbState.customers.forEach(c => {
+        let due = parseFloat(c[6]) || 0;
+        totalDue += due;
+        if(due > 0) custWithDue++; else custNoDue++;
+      });
+      document.getElementById('val-totalDue').innerText = "৳ " + totalDue.toFixed(2);
+      document.getElementById('val-totalCust').innerText = totalCust;
+      document.getElementById('val-custWithDue').innerText = custWithDue;
+      document.getElementById('val-custNoDue').innerText = custNoDue;
+    }
+
+    async function processOfflineQueue() {
+      if (!navigator.onLine) return;
+      const queue = getOfflineQueue();
+      if (queue.length === 0) return;
+
+      console.log(`Processing ${queue.length} offline operations...`);
+      localStorage.setItem('naushin_cached_db', JSON.stringify(dbState));
+
+      // Synchronously process requests one after another to prevent spreadsheet row overlapping corruption
+      for (const item of queue) {
+        try {
+          await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            mode: "cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ action: item.action, payload: item.payload })
+          });
+        } catch (err) {
+          console.error("Failed to sync item, breaking execution loop", err);
+          return; // Stop processing to avoid data sequence breakdown
+        }
+      }
+
+      // Flush queue storage once completely successful
+      localStorage.removeItem('naushin_offline_queue');
+      // Trigger live re-fetch to clean up structural representations
+      syncBackendData();
+    }
+
     async function apiRequest(action, payload = {}) {
+      // If offline, redirect execution context safely to queue processing architectures
+      if (!navigator.onLine) {
+        if(["saveCustomer", "addTransaction", "submitHalkhata"].includes(action)) {
+          addToOfflineQueue(action, payload);
+          return { status: 'success', offline: true, message: "অফলাইন মোডে সাময়িকভাবে সংরক্ষণ করা হয়েছে" };
+        } else {
+          // Serve read actions directly from client side db representation
+          if(action === "getDashboard") {
+            const localCached = localStorage.getItem('naushin_cached_db');
+            if(localCached) return JSON.parse(localCached);
+          }
+          return { status: 'error', message: "ইন্টারনেট কানেকশন উপলব্ধ নেই!" };
+        }
+      }
+
       try {
         const response = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
@@ -587,7 +755,6 @@
     function openModalWindow(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModalWindow(id) { document.getElementById(id).style.display = 'none'; }
 
-    // Custom Confirmation Dialog Populator Function
     function renderCustomConfirmBox(message, mode = "edit") {
       document.getElementById('dialogue-message-node').innerText = message;
       const iconContainer = document.getElementById('dialogue-icon-node');
@@ -610,11 +777,34 @@
       if(currentDialogueResolver) currentDialogueResolver(decisionValue);
     }
 
+    // Alphabetical sorter function (Supports both Bengali and English locale standard natively)
+    function sortAlphabetically(array) {
+      return array.sort((a, b) => {
+        const nameA = (a[1] || '').toString().trim();
+        const nameB = (b[1] || '').toString().trim();
+        return nameA.localeCompare(nameB, languageMode === 'bn' ? 'bn' : 'en', { sensitivity: 'accent' });
+      });
+    }
+
     async function syncBackendData() {
+      if(!navigator.onLine) {
+        const localCached = localStorage.getItem('naushin_cached_db');
+        if(localCached) {
+          dbState = JSON.parse(localCached);
+          updateDashboardCalculations();
+          // Render data with alphabetical sorting
+          renderCustomerList(sortAlphabetically([...dbState.customers]));
+        }
+        return;
+      }
+
       document.getElementById('customer-inject-wall').innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:20px;">ডাটা সিঙ্ক হচ্ছে...</p>`;
       const data = await apiRequest("getDashboard");
       dbState = data;
       
+      // Save global configuration space snapshot cache
+      localStorage.setItem('naushin_cached_db', JSON.stringify(data));
+
       document.getElementById('val-totalDue').innerText = "৳ " + data.totalDue.toFixed(2);
       document.getElementById('val-todayDue').innerText = "৳ " + data.todayDue.toFixed(2);
       document.getElementById('val-todayDeposit').innerText = "৳ " + data.todayDeposit.toFixed(2);
@@ -622,7 +812,8 @@
       document.getElementById('val-custWithDue').innerText = data.custWithDue;
       document.getElementById('val-custNoDue').innerText = data.custNoDue;
 
-      renderCustomerList(data.customers);
+      // Primary view displays strictly inside configured alphabetical list orders
+      renderCustomerList(sortAlphabetically([...data.customers]));
       syncHalkhataLedger();
     }
 
@@ -651,10 +842,9 @@
       document.getElementById('customer-inject-wall').innerHTML = html;
     }
 
-    // Special functionality to click and display zero due safe customers
     function filterPaidCustomersOnly() {
       let safeCustomers = dbState.customers.filter(c => (parseFloat(c[6]) || 0) === 0);
-      renderCustomerList(safeCustomers);
+      renderCustomerList(sortAlphabetically(safeCustomers));
       document.getElementById('search-core').value = '';
       alert(`মোট ${safeCustomers.length} জন বাকিমুক্ত পরিশোধ কাস্টমারের তালিকা লোড করা হয়েছে।`);
     }
@@ -715,12 +905,23 @@
       
       document.getElementById('customer-inject-wall').insertAdjacentHTML('afterbegin', `
         <div class="customer-row" id="temp-row" style="opacity:0.4; border-color:var(--google-blue);">
-          <div class="cust-meta"><h4>${payload.name}</h4><p>ন্যানো সেকেন্ডের মধ্যে প্রসেস হচ্ছে...</p></div>
+          <div class="cust-meta"><h4>${payload.name}</h4><p>প্রসেস করা হচ্ছে...</p></div>
         </div>
       `);
 
       let res = await apiRequest("saveCustomer", payload);
-      if(res.status === 'success') {
+      
+      // Handle cleanup if execution engine intercepted state as offline transaction
+      if(res.offline) {
+        document.getElementById('temp-row').remove();
+        document.getElementById('ins-name').value = '';
+        document.getElementById('ins-mobile').value = '';
+        document.getElementById('ins-village').value = '';
+        document.getElementById('ins-father').value = '';
+        document.getElementById('ins-due').value = '0';
+        document.getElementById('ins-details').value = '';
+      } else if(res.status === 'success') {
+        document.getElementById('temp-row').remove();
         document.getElementById('ins-name').value = '';
         document.getElementById('ins-mobile').value = '';
         document.getElementById('ins-village').value = '';
@@ -749,7 +950,7 @@
     function filterCustomerSystem() {
       let val = document.getElementById('search-core').value.toLowerCase();
       let matched = dbState.customers.filter(c => c[1].toLowerCase().includes(val) || c[2].toString().includes(val));
-      renderCustomerList(matched);
+      renderCustomerList(sortAlphabetically(matched));
     }
 
     async function fireProfileView(id) {
@@ -769,6 +970,11 @@
       openModalWindow('modal-profile');
 
       let res = await apiRequest("getHistory", { id: id });
+      if(!navigator.onLine) {
+        document.getElementById('timeline-box').innerHTML = '<p style="color:var(--google-amber);font-size:12px;padding:10px 0;">⚠️ অফলাইন মোডে হিস্টোরি টাইমলাইন রিড করা সম্ভব নয়।</p>';
+        return;
+      }
+
       let html = '';
       if(res.history.length === 0) html = '<p style="color:var(--text-muted);font-size:12px;padding:10px 0;">কোনো ট্রানজেকশন ইতিহাস পাওয়া যায়নি।</p>';
       res.history.forEach(h => {
@@ -789,8 +995,8 @@
       document.getElementById('timeline-box').innerHTML = html;
     }
 
-    // Trigger Custom dialogue confirmation box for saving edits
     async function triggerCustomerEditConfirmation() {
+      if(!navigator.onLine) return alert("অফলাইন মোডে কাস্টমার প্রোফাইল ইনফো এডিট করা যাবে না।");
       let isConfirmed = await renderCustomConfirmBox("আপনি কি সত্যিই কাস্টমারের এই নতুন ব্যক্তিগত তথ্য পরিবর্তন করে সংরক্ষণ করতে চান?", "edit");
       if(isConfirmed) {
         let p = {
@@ -808,9 +1014,9 @@
       }
     }
 
-    // Trigger Custom dialogue confirmation box for deleting records
     async function triggerCustomerDeletionConfirmation() {
-      let isConfirmed = await renderCustomConfirmBox("সতর্কতা! আপনি কি নিশ্চিতভাবে এই গ্রাহকের অ্যাকাউন্ট এবং সমস্ত খতিয়ান ডাটাবেস থেকে মুছে ফেলতে চান?", "del");
+      if(!navigator.onLine) return alert("অফলাইন মোডে রেকর্ড ডিলেট করা সম্ভব নয়।");
+      let isConfirmed = await renderCustomConfirmBox("ستর্কতা! আপনি কি নিশ্চিতভাবে এই গ্রাহকের অ্যাকাউন্ট এবং সমস্ত খতিয়ান ডাটাবেস থেকে মুছে ফেলতে চান?", "del");
       if(isConfirmed) {
         let res = await apiRequest("deleteCustomer", { id: selectedCustomerId });
         if(res.status === 'success') {
@@ -837,10 +1043,11 @@
       
       closeModalWindow('modal-profile');
       let res = await apiRequest("addTransaction", p);
-      if(res.status === 'success') {
+      
+      if(res.offline || res.status === 'success') {
         document.getElementById('tx-prod').value = '';
         document.getElementById('tx-amount').value = '';
-        syncBackendData();
+        if(!res.offline) syncBackendData();
       }
     }
 
@@ -855,8 +1062,10 @@
         return;
       }
       
+      // Filter results also wrapped inside clean configured alphabet collections
+      let sortedMatches = sortAlphabetically(matches);
       let html = '';
-      matches.forEach(m => {
+      sortedMatches.forEach(m => {
         let currentDue = parseFloat(m[6]) || 0;
         html += `<div style="padding:12px; cursor:pointer; border-bottom:1px solid var(--border-color); font-size:13px;" onclick="selectHalkhataCustomer('${m[0]}','${m[1]}','${m[3]}','${m[4]}', ${currentDue})">👤 ${m[1]} [${m[2]}] (বাকি: ৳${currentDue.toFixed(2)})</div>`;
       });
@@ -924,20 +1133,26 @@
       if(!p.custName || !p.amount) return alert("গ্রাহকের নাম ও হালখাতা জমার পরিমাণ অবশ্যই দিতে হবে!");
       
       let res = await apiRequest("submitHalkhata", p);
-      if(res.status === 'success') {
-        alert("শুভ হালখাতা এন্ট্রি সফল হয়েছে! কাস্টমার খতিয়ান অটো-আপডেট হয়েছে।");
+      if(res.offline || res.status === 'success') {
+        if(!res.offline) {
+          alert("শুভ হালখাতা এন্ট্রি সফল হয়েছে! কাস্টমার খতিয়ান অটো-আপডেট হয়েছে।");
+          syncBackendData();
+        } else {
+          alert("অফলাইন মোড: রেকর্ডটি সাময়িকভাবে লোকাল মেমরিতে যুক্ত করা হয়েছে!");
+        }
         document.getElementById('hk-search-input').value = '';
         document.getElementById('hk-name').value = '';
         document.getElementById('hk-address').value = '';
         document.getElementById('hk-father').value = '';
         document.getElementById('hk-amount').value = '';
         resetHalkhataLiveFields();
-        syncBackendData();
       }
     }
 
     async function syncHalkhataLedger() {
       let res = await apiRequest("getHalkhata");
+      if(!navigator.onLine) return; // Retain current screen data structures if offline
+
       let html = '';
       let cashPool = 0;
       if(res.rows && res.rows.length > 0) {
@@ -963,6 +1178,7 @@
 
     async function openProfitLossModal() {
       toggleDropdown();
+      if(!navigator.onLine) return alert("দুঃখিত, অ্যানালিটিক্স চার্ট দেখার জন্য ইন্টারনেট সংযোগ আবশ্যক।");
       openModalWindow('modal-profit-loss');
       if (!cachedAnalyticsData) {
         let res = await apiRequest("getProfitLossData");
@@ -1020,11 +1236,12 @@
         document.getElementById('search-core').placeholder = "কাস্টমার নাম বা মোবাইল নম্বর দিয়ে খুঁজুন...";
         document.getElementById('lang-btn-text').innerText = "EN";
       }
+      // Re-sort data based on language localization context rules instantly
+      renderCustomerList(sortAlphabetically([...dbState.customers]));
     }
 
     function openCalculator() { openModalWindow('modal-calc'); toggleDropdown(); }
     
-    // High-Quality Dynamic Internal Calculator Controller Engine with Backspace
     let calcString = '';
     function inputCalc(val) {
       const display = document.getElementById('calc-display');
@@ -1033,7 +1250,6 @@
         display.innerText = '0'; 
       }
       else if(val === 'B') { 
-        // Engine Character Backspace Module
         if(calcString.length > 0) {
           calcString = calcString.slice(0, -1);
           display.innerText = calcString || '0';
@@ -1042,7 +1258,6 @@
       else if(val === '=') {
         try { 
           if(!calcString) return;
-          // Security filter to clean expressions before math compilation evaluation
           let formattedExpr = calcString.replace(/×/g, '*').replace(/÷/g, '/');
           display.innerText = eval(formattedExpr); 
           calcString = display.innerText; 
