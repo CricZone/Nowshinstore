@@ -71,9 +71,9 @@
     .card-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
     .card-val { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
 
-    /* Offline Ticker */
-    .offline-ticker { display: none; background: rgba(255, 159, 67, 0.15); border: 1px solid var(--orange-warn); border-radius: var(--radius-sm); margin: 6px 12px; padding: 8px; overflow: hidden; white-space: nowrap; }
-    .offline-ticker-text { display: inline-block; padding-left: 100%; font-size: 12px; font-weight: 600; color: var(--orange-warn); animation: marquee 15s linear infinite; }
+    /* Fix Scroll Ticker Box */
+    .offline-ticker { display: none; background: rgba(255, 159, 67, 0.15); border: 1px solid var(--orange-warn); border-radius: var(--radius-sm); margin: 6px 12px; padding: 10px; overflow: hidden; position: relative; }
+    .offline-ticker-text { display: inline-block; white-space: nowrap; padding-left: 100%; font-size: 13px; font-weight: 600; color: var(--orange-warn); animation: marquee 15s linear infinite; }
     @keyframes marquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
 
     .search-filter-hub { padding: 0 16px; display: flex; gap: 10px; margin-bottom: 16px; align-items: center; }
@@ -236,34 +236,34 @@
   </header>
 
   <div class="offline-ticker" id="offline-status-ticker">
-    <div class="offline-ticker-text" id="ticker-scrolling-content">⚠️ আপনি বর্তমানে অফলাইন মোডে আছেন! ইন্টারনেট ছাড়া সমস্ত তথ্য এন্ট্রি করতে পারবেন।</div>
+    <div class="offline-ticker-text" id="ticker-scrolling-content">⚠️ আপনি বর্তমানে অফলাইন মোডে আছেন! ইন্টারনেট ছাড়াই সমস্ত তথ্য এন্ট্রি করতে পারবেন।</div>
   </div>
 
   <main id="view-home">
     <div class="dashboard">
       <div class="studio-card card-span-2" style="background: linear-gradient(135deg, #1b1b1f, #271919);">
         <div class="card-label lang-node" data-bn="সর্বমোট খাতা বাকি" data-en="Total Outstanding Due">সর্বমোট বাকি</div>
-        <div class="card-val" style="color:var(--google-red);" id="val-totalDue">৳ 0</div>
+        <div class="card-val" style="color:var(--google-red);" id="val-totalDue">৳ ০</div>
       </div>
       <div class="studio-card">
         <div class="card-label lang-node" data-bn="আজকের নতুন বাকি" data-en="Today's Fresh Due">নতুন বাকি</div>
-        <div class="card-val" id="val-todayDue">৳ 0</div>
+        <div class="card-val" id="val-todayDue">৳ ০</div>
       </div>
       <div class="studio-card">
         <div class="card-label lang-node" data-bn="আজকের ক্যাশ জমা" data-en="Today's Cash Deposit">ক্যাশ জমা</div>
-        <div class="card-val" style="color:var(--google-green);" id="val-todayDeposit">৳ 0</div>
+        <div class="card-val" style="color:var(--google-green);" id="val-todayDeposit">৳ ০</div>
       </div>
       <div class="studio-card">
         <div class="card-label lang-node" data-bn="মোট নথিভুক্ত কাস্টমার" data-en="Total Registered Customer">মোট কাস্টমার</div>
-        <div class="card-val" id="val-totalCust">0</div>
+        <div class="card-val" id="val-totalCust">০</div>
       </div>
       <div class="studio-card">
         <div class="card-label lang-node" data-bn="বাকি থাকা কাস্টমার" data-en="Dues Active Customers">বাকি কাস্টমার</div>
-        <div class="card-val" style="color:var(--google-red);" id="val-custWithDue">0</div>
+        <div class="card-val" style="color:var(--google-red);" id="val-custWithDue">০</div>
       </div>
       <div class="studio-card card-span-2 clickable-card" onclick="filterPaidCustomersOnly()" title="পরিশোধ কাস্টমারদের তালিকা দেখতে ক্লিক করুন">
         <div class="card-label lang-node" data-bn="বাকি মুক্ত কাস্টমার সংখ্যা (তালিকা দেখতে ক্লিক করুন)" data-en="Due Free Safe Customers (Click to view)">পরিশোধ কাস্টমার</div>
-        <div class="card-val" style="color:var(--google-green);" id="val-custNoDue">0</div>
+        <div class="card-val" style="color:var(--google-green);" id="val-custNoDue">০</div>
       </div>
     </div>
 
@@ -290,6 +290,11 @@
     <div class="studio-card halkhata-card-premium" style="margin-bottom:20px;">
       
       <div class="form-grid">
+        <div class="form-group span-full" style="margin-bottom:10px;">
+          <label style="color:var(--halkhata-gold); font-weight:700; font-size:12px; margin-bottom:5px;">📅 হালখাতা চক্র শুরুর তারিখ (প্রতি ৬ মাস পর অটো রিমুভ হবে)</label>
+          <input type="date" id="hk-cycle-date" class="form-control" onchange="saveHalkhataCycleDate(this.value)">
+        </div>
+
         <div class="form-group span-full">
           <label class="lang-node traditional-header-label" data-bn="খাতা টাইপ / কাস্টমার সার্চ ইঞ্জিন" data-en="Search Ledger Customer">কাস্টমার সার্চ</label>
           <input type="text" id="hk-search-input" class="form-control" placeholder="খাতার কাস্টমার খুঁজতে নাম টাইপ করুন..." oninput="autoSearchHalkhataCust(this.value)">
@@ -315,14 +320,14 @@
 
         <div class="form-group">
           <label class="lang-node" data-bn="হালখাতা ক্যাশ জমা *" data-en="Halkhata Deposit Amount *">হালখাতা ক্যাশ জমা *</label>
-          <input type="number" id="hk-amount" class="form-control" placeholder="৳ 0" style="font-weight:700; color:var(--google-green);" oninput="calculateHalkhataLiveRemains()">
+          <input type="number" id="hk-amount" class="form-control" placeholder="৳ ০" style="font-weight:700; color:var(--google-green);" oninput="calculateHalkhataLiveRemains()">
         </div>
 
         <div class="form-group span-full">
           <div class="halkhata-live-reporter">
             <div class="live-badge">
               <span>পূর্বের মোট বাকি</span>
-              <strong id="hk-live-old-due" style="color: var(--google-red);">৳ 0</strong>
+              <strong id="hk-live-old-due" style="color: var(--google-red);">৳ ০</strong>
             </div>
             <div class="live-badge">
               <span>হিসাব বিবরণী</span>
@@ -354,7 +359,7 @@
         <tbody id="halkhata-rows-target"></tbody>
       </table>
     </div>
-    <div id="hk-pool-counter" style="margin-top:18px; text-align:right; font-size:16px; font-weight:700; color:var(--google-green);">সর্বমোট হালখাতা কালেকশন: ৳0</div>
+    <div id="hk-pool-counter" style="margin-top:18px; text-align:right; font-size:16px; font-weight:700; color:var(--google-green);">সর্বমোট হালখাতা কালেকশন: ৳০</div>
   </main>
 
   <div class="modal-overlay" id="modal-add">
@@ -390,7 +395,7 @@
         </div>
         <div class="form-group">
           <label class="lang-node" data-bn="শুরুর পূর্বের বাকি পরিমাণ" data-en="Opening Due Balance">শুরুর পূর্বের বাকি</label>
-          <input type="number" id="ins-due" class="form-control" value="0">
+          <input type="number" id="ins-due" class="form-control" placeholder="৳ উদাহরণ: ৫০০">
         </div>
         <div class="form-group">
           <label class="lang-node" data-bn="জিনিসের বিবরণ (চাল ধরণ)" data-en="Product Item Details">পণ্যের বিবরণ</label>
@@ -431,8 +436,8 @@
       </div>
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px;">
-        <div class="studio-card" style="text-align:center; padding: 12px;"><span class="card-label">বর্তমান মোট বাকি</span><div id="prof-stat-due" style="color:var(--google-red); font-weight:700; font-size:20px;">৳0</div></div>
-        <div class="studio-card" style="text-align:center; padding: 12px;"><span class="card-label">সর্বমোট জমা</span><div id="prof-stat-dep" style="color:var(--google-green); font-weight:700; font-size:20px;">৳0</div></div>
+        <div class="studio-card" style="text-align:center; padding: 12px;"><span class="card-label">বর্তমান মোট বাকি</span><div id="prof-stat-due" style="color:var(--google-red); font-weight:700; font-size:20px;">৳০</div></div>
+        <div class="studio-card" style="text-align:center; padding: 12px;"><span class="card-label">সর্বমোট জমা</span><div id="prof-stat-dep" style="color:var(--google-green); font-weight:700; font-size:20px;">৳০</div></div>
       </div>
 
       <h4 style="margin-bottom:12px; font-size:13px; text-transform:uppercase; color:var(--google-blue);" class="lang-node" data-bn="নতুন লেনদেন ও পণ্য এন্ট্রি করুন" data-en="New Transaction Posting">নতুন লেনদেন ও পণ্য এন্ট্রি করুন</h4>
@@ -489,7 +494,7 @@
         
         <button class="calc-btn" onclick="inputCalc('0')">0</button>
         <button class="calc-btn" onclick="inputCalc('.')">.</button>
-        <button class="calc-btn clear-btn" onclick="inputCalc('B')" title="একটি সংখ্যা মুছুন">⌫</button>
+        <button class="calc-btn clear-btn" onclick="inputCalc('B')", title="একটি সংখ্যা মুছুন">⌫</button>
         <button class="calc-btn eq-btn" onclick="inputCalc('=')">=</button>
       </div>
     </div>
@@ -564,9 +569,28 @@
     let currentDialogueResolver = null;
     let isSyncingActive = false;
 
+    // Numbers translation Helper function
+    function translateNumbers(input) {
+      if (input === undefined || input === null) return '';
+      let str = input.toString();
+      const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+      const englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+      
+      if (languageMode === 'bn') {
+        return str.replace(/[0-9]/g, w => bengaliDigits[parseInt(w)]);
+      } else {
+        return str.replace(/[০-৯]/g, w => englishDigits[bengaliDigits.indexOf(w)]);
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       initAppOfflineEngine();
       registerPWA();
+      
+      if(localStorage.getItem('naushin_hk_cycle_date')) {
+        document.getElementById('hk-cycle-date').value = localStorage.getItem('naushin_hk_cycle_date');
+      }
+
       if(navigator.onLine) {
         processBackgroundSyncQueue();
       } else {
@@ -574,16 +598,39 @@
       }
     });
 
+    function saveHalkhataCycleDate(dateVal) {
+      if(!dateVal) return;
+      localStorage.setItem('naushin_hk_cycle_date', dateVal);
+      syncHalkhataLedger();
+    }
+
+    function checkHalkhataDataValidity(rowDateString) {
+      let cycleDateStr = localStorage.getItem('naushin_hk_cycle_date');
+      if(!cycleDateStr) return true; 
+
+      let cycleDate = new Date(cycleDateStr);
+      let rowDate = new Date(parseInt(rowDateString) || rowDateString);
+      
+      if (isNaN(rowDate.getTime())) return true;
+
+      let timeDifference = rowDate.getTime() - cycleDate.getTime();
+      let daysDifference = timeDifference / (1000 * 3600 * 24);
+
+      if(daysDifference > 182) {
+        return false; // 6 Months Crossed! Automatically removed
+      }
+      return true;
+    }
+
     function updateScrollingTicker(status, customMessage = "") {
       const ticker = document.getElementById('offline-status-ticker');
       const tickerText = document.getElementById('ticker-scrolling-content');
       
       ticker.style.display = 'block';
       
-      // Reset marquee animation instantly to start reading from the beginning
       tickerText.style.animation = 'none';
       tickerText.offsetHeight; 
-      tickerText.style.animation = '';
+      tickerText.style.animation = 'marquee 15s linear infinite';
 
       if (status === "offline") {
         tickerText.innerHTML = "⚠️ আপনি বর্তমানে অফলাইন মোডে আছেন! ইন্টারনেট ছাড়াই নির্ভুলভাবে কাস্টমার অ্যাড, লেনদেন ও শুভ হালখাতা এন্ট্রি করতে পারবেন।";
@@ -605,13 +652,13 @@
         tickerText.style.color = "var(--text-muted)";
         ticker.style.background = "rgba(255, 255, 255, 0.05)";
         ticker.style.borderColor = "var(--border-color)";
-        setTimeout(() => { ticker.style.display = 'none'; }, 3000);
+        setTimeout(() => { ticker.style.display = 'none'; }, 8000);
       } else if (status === "success") {
         tickerText.innerHTML = "✅ ধন্যবাদ! আপনার অফলাইন তথ্য সম্পূর্ণ আপডেট হয়েছে।";
         tickerText.style.color = "var(--google-green)";
         ticker.style.background = "rgba(61, 213, 152, 0.15)";
         ticker.style.borderColor = "var(--google-green)";
-        setTimeout(() => { ticker.style.display = 'none'; }, 3000);
+        setTimeout(() => { ticker.style.display = 'none'; }, 8000);
       }
     }
 
@@ -665,14 +712,12 @@
         return;
       }
 
-      // Customer mapping object to translate offline generated temporary IDs to actual online database IDs
       let offlineToOnlineIdMap = {};
 
       for(let job of queue) {
         updateScrollingTicker("syncing", job.label);
-        await new Promise(resolve => setTimeout(resolve, 1500)); 
+        await new Promise(resolve => setTimeout(resolve, 2500)); 
 
-        // Update payload if it depends on a freshly created offline customer id
         if(job.payload.custId && offlineToOnlineIdMap[job.payload.custId]) {
           job.payload.custId = offlineToOnlineIdMap[job.payload.custId];
         }
@@ -686,7 +731,6 @@
           });
           let result = await response.json();
           
-          // Map generated true sheet ID if transaction belongs to a brand new offline customer account
           if(job.action === "saveCustomer" && result.status === 'success' && result.onlineId) {
             offlineToOnlineIdMap[job.payload.offlineId] = result.onlineId;
           }
@@ -718,14 +762,14 @@
     }
 
     function fmtAmt(val) {
-      return Math.round(parseFloat(val) || 0).toString();
+      return translateNumbers(Math.round(parseFloat(val) || 0).toString());
     }
 
     async function apiRequest(action, payload = {}) {
       if(!navigator.onLine) {
         if(action === "saveCustomer") {
           let mockId = "OFFLINE-CUST-" + Date.now();
-          payload.offlineId = mockId; // Tagging payload with unique offline tracker
+          payload.offlineId = mockId;
           let newRow = [mockId, payload.name, payload.mobile, payload.village, payload.fatherName, payload.prodDetails, parseFloat(payload.initialDue)||0, 0];
           dbState.customers.push(newRow);
           localStorage.setItem('naushin_db_cache', JSON.stringify(dbState));
@@ -749,7 +793,7 @@
           let c = dbState.customers.find(item => item[0] === payload.custId);
           if(c) {
             let amt = parseFloat(payload.amount) || 0;
-            c[6] = Math.max(0, (parseFloat(c[6]) || 0) - amt); // Automated subtraction logic
+            c[6] = Math.max(0, (parseFloat(c[6]) || 0) - amt); 
             c[7] = (parseFloat(c[7]) || 0) + amt;
           }
           
@@ -869,7 +913,7 @@
     function renderDashboardStates(data) {
       if(!data) return;
       
-      let tDue = 0, tDep = 0, cWithDue = 0, cNoDue = 0;
+      let tDue = 0, cWithDue = 0, cNoDue = 0;
       if(data.customers) {
         data.customers.forEach(c => {
           let due = parseFloat(c[6]) || 0;
@@ -882,9 +926,9 @@
       document.getElementById('val-totalDue').innerText = "৳ " + fmtAmt(data.totalDue !== undefined ? data.totalDue : tDue);
       document.getElementById('val-todayDue').innerText = "৳ " + fmtAmt(data.todayDue || 0);
       document.getElementById('val-todayDeposit').innerText = "৳ " + fmtAmt(data.todayDeposit || 0);
-      document.getElementById('val-totalCust').innerText = data.customers ? data.customers.length : (data.totalCust || 0);
-      document.getElementById('val-custWithDue').innerText = data.customers ? cWithDue : (data.custWithDue || 0);
-      document.getElementById('val-custNoDue').innerText = data.customers ? cNoDue : (data.custNoDue || 0);
+      document.getElementById('val-totalCust').innerText = translateNumbers(data.customers ? data.customers.length : (data.totalCust || 0));
+      document.getElementById('val-custWithDue').innerText = translateNumbers(data.customers ? cWithDue : (data.custWithDue || 0));
+      document.getElementById('val-custNoDue').innerText = translateNumbers(data.customers ? cNoDue : (data.custNoDue || 0));
 
       let sortedList = sortAlphabetically([...data.customers]);
       renderCustomerList(sortedList);
@@ -901,14 +945,16 @@
       custArray.forEach(c => {
         let currentDue = parseFloat(c[6]) || 0;
         let isDue = currentDue > 0;
+        let isOfflineSaved = c[0].toString().includes("OFFLINE-CUST");
+        
         html += `
           <div class="customer-row" onclick="fireProfileView('${c[0]}')">
             <div class="cust-meta">
-              <h4>${c[1]}</h4>
-              <p><span>📱</span> ${c[2]} | <span>🏡</span> ${c[3]}</p>
+              <h4>${c[1]} ${isOfflineSaved ? '<span style="color:var(--orange-warn); font-size:11px;">(অফলাইন সেভ)</span>' : ''}</h4>
+              <p><span>📱</span> ${translateNumbers(c[2])} | <span>🏡</span> ${c[3]}</p>
             </div>
             <div class="cust-balance-status" style="color:${isDue ? 'var(--google-red)' : 'var(--google-green)'}">
-              ${isDue ? 'বাকি: ৳' + fmtAmt(currentDue) : 'পরিশোধ (0)'}
+              ${isDue ? (languageMode === 'bn' ? 'বাকি: ৳' : 'Due: $') + fmtAmt(currentDue) : (languageMode === 'bn' ? 'পরিশোধ (০)' : 'Paid (0)')}
             </div>
           </div>
         `;
@@ -921,7 +967,7 @@
       let sortedSafes = sortAlphabetically(safeCustomers);
       renderCustomerList(sortedSafes);
       document.getElementById('search-core').value = '';
-      alert(`মোট ${sortedSafes.length} জন বাকিমুক্ত পরিশোধ কাস্টমারের তালিকা লোড করা হয়েছে।`);
+      alert(`মোট ${translateNumbers(sortedSafes.length)} জন বাকিমুক্ত পরিশোধ কাস্টমারের তালিকা লোড করা হয়েছে।`);
     }
 
     function toggleSortAmount() {
@@ -967,7 +1013,7 @@
         mobile: document.getElementById('ins-mobile').value,
         village: document.getElementById('ins-village').value,
         fatherName: document.getElementById('ins-father').value,
-        initialDue: document.getElementById('ins-due').value,
+        initialDue: document.getElementById('ins-due').value || "0",
         prodDetails: document.getElementById('ins-details').value
       };
 
@@ -978,25 +1024,33 @@
 
       closeModalWindow('modal-add');
       
-      document.getElementById('customer-inject-wall').insertAdjacentHTML('afterbegin', `
-        <div class="customer-row" id="temp-row" style="opacity:0.4; border-color:var(--google-blue);">
-          <div class="cust-meta"><h4>${payload.name}</h4><p>প্রসেস হচ্ছে...</p></div>
+      // Fixed: Append direct working node without processing lock hang
+      let mockIdStr = "OFFLINE-CUST-" + Date.now();
+      let temporaryRowHtml = `
+        <div class="customer-row" id="temp-${mockIdStr}" onclick="fireProfileView('${mockIdStr}')">
+          <div class="cust-meta"><h4>${payload.name} <span style='color:var(--google-blue); font-size:11px;'>(সংরক্ষিত হচ্ছে...)</span></h4><p>📱 ${translateNumbers(payload.mobile)}</p></div>
+          <div class="cust-balance-status" style="color:var(--google-red)">৳${fmtAmt(payload.initialDue)}</div>
         </div>
-      `);
+      `;
+      document.getElementById('customer-inject-wall').insertAdjacentHTML('afterbegin', temporaryRowHtml);
 
       let res = await apiRequest("saveCustomer", payload);
+      
+      // Clear Input Fields
+      document.getElementById('ins-name').value = '';
+      document.getElementById('ins-mobile').value = '';
+      document.getElementById('ins-village').value = '';
+      document.getElementById('ins-father').value = '';
+      document.getElementById('ins-due').value = '';
+      document.getElementById('ins-details').value = '';
+      
+      if(document.getElementById(`temp-${mockIdStr}`)) {
+        document.getElementById(`temp-${mockIdStr}`).remove();
+      }
+      
       if(res.status === 'success') {
-        document.getElementById('ins-name').value = '';
-        document.getElementById('ins-mobile').value = '';
-        document.getElementById('ins-village').value = '';
-        document.getElementById('ins-father').value = '';
-        document.getElementById('ins-due').value = '0';
-        document.getElementById('ins-details').value = '';
-        
         alert("কাস্টমার তথ্য যুক্ত হয়েছে!");
-      } else {
-        alert("ডাটা প্রসেস করা সম্ভব হয়নি!");
-        if(document.getElementById('temp-row')) document.getElementById('temp-row').remove();
+        syncBackendData();
       }
     }
 
@@ -1022,6 +1076,7 @@
     async function fireProfileView(id) {
       selectedCustomerId = id;
       let c = dbState.customers.find(item => item[0] === id);
+      if(!c) return;
       
       document.getElementById('prof-header-title').innerText = c[1];
       document.getElementById('prof-name').value = c[1];
@@ -1036,7 +1091,7 @@
       openModalWindow('modal-profile');
 
       if(!navigator.onLine) {
-        document.getElementById('timeline-box').innerHTML = '<p style="color:var(--orange-warn);font-size:12px;padding:10px 0;">অফলাইন মোডে ট্রানজেকশন ইতিহাস দেখা সম্ভব নয়।</p>';
+        document.getElementById('timeline-box').innerHTML = '<p style="color:var(--orange-warn);font-size:12px;padding:10px 0;">অফলাইন মোডে পূর্বের ট্রানজেকশন ইতিহাস দেখা সম্ভব নয়। তবে নতুন বাকি/জমা এড করতে পারবেন।</p>';
         return;
       }
 
@@ -1050,9 +1105,9 @@
             <div class="timeline-item ${isDue ? 'timeline-due' : 'timeline-dep'}">
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <strong style="color: ${isDue ? 'var(--google-red)' : 'var(--google-green)'}; font-size:14px;">
-                  ${isDue ? '🔴 খাতা বাকি' : '🟢 ক্যাশ জমা'} — ৳${fmtAmt(h.amount)}
+                  ${isDue ? (languageMode === 'bn' ? '🔴 খাতা বাকি' : '🔴 Credit Due') : (languageMode === 'bn' ? '🟢 ক্যাশ জমা' : '🟢 Cash Deposit')} — ৳${fmtAmt(h.amount)}
                 </strong>
-                <span style="color:var(--text-muted); font-size:10px;">🕒 ${h.dateTime}</span>
+                <span style="color:var(--text-muted); font-size:10px;">🕒 ${translateNumbers(h.dateTime)}</span>
               </div>
               <div style="color:var(--text-primary); font-size:12px; margin-top:4px; font-weight:500;">📦 বিবরণ: ${h.prodName}</div>
               <div style="color:var(--text-muted); font-size:10px; margin-top:2px;">অবস্থা: ${h.status}</div>
@@ -1115,6 +1170,7 @@
         document.getElementById('tx-prod').value = '';
         document.getElementById('tx-amount').value = '';
         alert("লেনদেন সফলভাবে যুক্ত হয়েছে!");
+        syncBackendData(); // Fix: Force update states over the layout view instantly
       }
     }
 
@@ -1133,7 +1189,7 @@
       let sortedMatches = sortAlphabetically(matches);
       sortedMatches.forEach(m => {
         let currentDue = parseFloat(m[6]) || 0;
-        html += `<div style="padding:12px; cursor:pointer; border-bottom:1px solid var(--border-color); font-size:13px;" onclick="selectHalkhataCustomer('${m[0]}','${m[1]}','${m[3]}','${m[4]}', ${currentDue})">👤 ${m[1]} [${m[2]}] (বাকি: ৳${fmtAmt(currentDue)})</div>`;
+        html += `<div style="padding:12px; cursor:pointer; border-bottom:1px solid var(--border-color); font-size:13px;" onclick="selectHalkhataCustomer('${m[0]}','${m[1]}','${m[3]}','${m[4]}', ${currentDue})">👤 ${m[1]} [${translateNumbers(m[2])}] (বাকি: ৳${fmtAmt(currentDue)})</div>`;
       });
       container.innerHTML = html;
       container.style.display = 'block';
@@ -1182,7 +1238,7 @@
     function resetHalkhataLiveFields() {
       document.getElementById('hk-cust-id').value = "OUTSIDE-CUST";
       currentHalkhataSelectedDue = 0;
-      document.getElementById('hk-live-old-due').innerText = "৳ 0";
+      document.getElementById('hk-live-old-due').innerText = "৳ ০";
       document.getElementById('hk-live-status-text').innerText = "কোনো ইনপুট নেই";
       document.getElementById('hk-live-status-text').style.color = "var(--text-muted)";
     }
@@ -1207,6 +1263,7 @@
         document.getElementById('hk-father').value = '';
         document.getElementById('hk-amount').value = '';
         resetHalkhataLiveFields();
+        syncBackendData();
       }
     }
 
@@ -1215,7 +1272,10 @@
       let localHK = JSON.parse(localStorage.getItem('naushin_local_halkhata') || '[]');
       
       localHK.forEach(row => {
-        combinedRows.push(row);
+        // Checking 6 months expiration range filter dynamically
+        if(checkHalkhataDataValidity(row[0])) {
+          combinedRows.push(row);
+        }
       });
 
       if(navigator.onLine && !isSyncingActive) {
@@ -1229,8 +1289,11 @@
           
           if(res && res.rows) {
             res.rows.forEach(r => {
-              if (!localHK.some(l => l[1] === r[1] && l[6] == r[6])) {
-                combinedRows.push(r);
+              // Row[0] expected timestamp or direct spreadsheet index row entry date
+              if(checkHalkhataDataValidity(r[0])) {
+                if (!localHK.some(l => l[1] === r[1] && l[6] == r[6])) {
+                  combinedRows.push(r);
+                }
               }
             });
           }
@@ -1239,18 +1302,19 @@
       
       let html = '';
       let cashPool = 0;
+      let visibleIdx = 1;
       
       if(combinedRows.length > 0) {
-        combinedRows.forEach((r, idx) => {
+        combinedRows.forEach((r) => {
           cashPool += parseFloat(r[6]) || 0;
-          let isPending = r[7].includes("পেন্ডিং");
+          let isPending = r[7].toString().includes("পেন্ডিং");
           let statusBadgeStyle = isPending 
             ? "background:rgba(255,159,67,0.15); color:var(--orange-warn);" 
             : "background:rgba(61,213,152,0.15); color:var(--google-green);";
             
           html += `
             <tr>
-              <td>${idx + 1}</td>
+              <td>${translateNumbers(visibleIdx++)}</td>
               <td><strong>${r[2]}</strong></td>
               <td>${r[4] || 'N/A'}</td>
               <td>${r[5] || 'N/A'}</td>
@@ -1263,7 +1327,7 @@
         html = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">হালখাতার কোনো রেকর্ড এন্ট্রি নেই</td></tr>`;
       }
       document.getElementById('halkhata-rows-target').innerHTML = html;
-      document.getElementById('hk-pool-counter').innerText = "সর্বমোট হালখাতা কালেকশন: ৳" + fmtAmt(cashPool);
+      document.getElementById('hk-pool-counter').innerText = (languageMode === 'bn' ? "সর্বমোট হালখাতা কালেকশন: ৳" : "Total Halkhata Collection: $") + fmtAmt(cashPool);
     }
 
     async function openProfitLossModal() {
@@ -1292,7 +1356,7 @@
       globalChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['লাভ (Profit)', 'ক্ষতি (Loss)'],
+          labels: languageMode === 'bn' ? ['লাভ', 'ক্ষতি'] : ['Profit', 'Loss'],
           datasets: [{
             label: 'টাকার পরিমাণ (৳)',
             data: [dataNode.profit, dataNode.loss],
@@ -1327,6 +1391,7 @@
         document.getElementById('search-core').placeholder = "কাস্টমার নাম বা মোবাইল নম্বর দিয়ে খুঁজুন...";
         document.getElementById('lang-btn-text').innerText = "EN";
       }
+      if(dbState) renderDashboardStates(dbState);
     }
 
     function openCalculator() { openModalWindow('modal-calc'); toggleDropdown(); }
@@ -1369,7 +1434,7 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           const swCode = `
-            const CACHE_NAME = 'naushin-store-v5';
+            const CACHE_NAME = 'naushin-store-v6';
             const ASSETS = [
               './',
               './index.html',
