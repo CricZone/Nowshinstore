@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#1b1b1f">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuCmqOCmruCmtiCmuOCnjeCmnYpSgOCmnyDgpqYgQ2hhdWwgR2hvciIsCiAgInNob3J0X25hbWUiOiAi4Kao4Km24Ka_4KaoIOCmuOCnjeCmnYpSIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwZjEwMTQiLAogICJ0aGVtZV9jb2xvciI6ICIxYjFiMWYiCn0=">
+  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuCmqOCmruCmtiCmuOCnjeCmnYpSgOCmnyDgpqYgQ2hhavWwgR2hvciIsCiAgInNob3J0X25hbWUiOiAi4Kao4Km24Ka_4KaoIOCmuOCnjeCmnYpSIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGYxMDE0IiwKICAidGhlbWVfY29sb3IiOiAiIzFiMWIxZiIKfQ==">
 
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -71,7 +71,7 @@
     .card-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
     .card-val { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
 
-    /* Premium Ticker Style for Offline Status */
+    /* Offline Ticker */
     .offline-ticker { display: none; background: rgba(255, 159, 67, 0.15); border: 1px solid var(--orange-warn); border-radius: var(--radius-sm); margin: 6px 12px; padding: 8px; overflow: hidden; white-space: nowrap; }
     .offline-ticker-text { display: inline-block; padding-left: 100%; font-size: 12px; font-weight: 600; color: var(--orange-warn); animation: marquee 15s linear infinite; }
     @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
@@ -94,7 +94,11 @@
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
     .modal-header h3 { font-size: 18px; font-weight: 700; color: var(--google-blue); }
     
-    .form-group { margin-bottom: 14px; }
+    /* 2 Column Responsive Grid System for Forms */
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 14px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 14px; }
+    .form-group { display: flex; flex-direction: column; }
+    .form-group.span-full { grid-column: span 2; }
     .form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
     .form-control { width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-primary); padding: 11px 14px; border-radius: var(--radius-sm); font-size: 14px; outline: none; transition: all 0.2s; }
     .form-control:focus { border-color: var(--google-blue); box-shadow: 0 0 0 3px rgba(168,199,250,0.1); }
@@ -151,7 +155,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       margin-top: 4px;
-      margin-bottom: 12px;
+      margin-bottom: 4px;
     }
     .live-badge {
       padding: 8px 10px;
@@ -234,22 +238,22 @@
   </header>
 
   <div class="offline-ticker" id="offline-status-ticker">
-    <div class="offline-ticker-text">⚠️ আপনি বর্তমানে অফলাইন মোডে আছেন! আপনার এন্ট্রি করা সমস্ত ডাটা সুরক্ষিত আছে এবং ইন্টারনেট সংযোগ পাওয়ার সাথে সাথে গুগল শিটে অটো-আপডেট হয়ে যাবে।</div>
+    <div class="offline-ticker-text" id="ticker-scrolling-content">⚠️ আপনি বর্তমানে অফলাইন মোডে আছেন! আপনার এন্ট্রি করা সমস্ত ডাটা সুরক্ষিত আছে এবং ইন্টারনেট সংযোগ পাওয়ার সাথে সাথে গুগল শিটে অটো-আপডেট হয়ে যাবে।</div>
   </div>
 
   <main id="view-home">
     <div class="dashboard">
       <div class="studio-card card-span-2" style="background: linear-gradient(135deg, #1b1b1f, #271919);">
         <div class="card-label lang-node" data-bn="সর্বমোট খাতা বাকি" data-en="Total Outstanding Due">সর্বমোট বাকি</div>
-        <div class="card-val" style="color:var(--google-red);" id="val-totalDue">৳ 0.00</div>
+        <div class="card-val" style="color:var(--google-red);" id="val-totalDue">৳ 0</div>
       </div>
       <div class="studio-card">
         <div class="card-label lang-node" data-bn="আজকের নতুন বাকি" data-en="Today's Fresh Due">নতুন বাকি</div>
-        <div class="card-val" id="val-todayDue">৳ 0.00</div>
+        <div class="card-val" id="val-todayDue">৳ 0</div>
       </div>
       <div class="studio-card">
         <div class="card-label lang-node" data-bn="আজকের ক্যাশ জমা" data-en="Today's Cash Deposit">ক্যাশ জমা</div>
-        <div class="card-val" style="color:var(--google-green);" id="val-todayDeposit">৳ 0.00</div>
+        <div class="card-val" style="color:var(--google-green);" id="val-todayDeposit">৳ 0</div>
       </div>
       <div class="studio-card">
         <div class="card-label lang-node" data-bn="মোট নথিভুক্ত কাস্টমার" data-en="Total Registered Customer">মোট কাস্টমার</div>
@@ -286,42 +290,51 @@
     <h3 style="margin-bottom:16px; font-weight:700; display:flex; align-items:center; gap:8px;" class="lang-node" data-bn="📖 শুভ হালখাতা" data-en="📖 Shuvho Halkhata">📖 শুভ হালখাতা</h3>
     
     <div class="studio-card halkhata-card-premium" style="margin-bottom:20px;">
-      <div class="form-group">
-        <label class="lang-node traditional-header-label" data-bn="খাতা টাইপ / কাস্টমার সার্চ ইঞ্জিন" data-en="Search Ledger Customer">কাস্টমার সার্চ</label>
-        <input type="text" id="hk-search-input" class="form-control" placeholder="খাতার কাস্টমার খুঁজতে নাম টাইপ করুন..." oninput="autoSearchHalkhataCust(this.value)">
-        <div id="hk-search-results" style="background:var(--bg-input); border: 1px solid var(--border-color); border-radius:var(--radius-sm); margin-top:6px; max-height:160px; overflow-y:auto; display:none;"></div>
-      </div>
       
-      <input type="hidden" id="hk-cust-id" value="OUTSIDE-CUST">
-
-      <div class="form-group">
-        <label class="lang-node" data-bn="গ্রাহকের পূর্ণ নাম *" data-en="Customer Full Name *">গ্রাহকের নাম *</label>
-        <input type="text" id="hk-name" class="form-control" placeholder="নতুন নাম লিখুন অথবা উপর থেকে সিলেক্ট করুন">
-      </div>
-
-      <div class="halkhata-live-reporter">
-        <div class="live-badge">
-          <span>পূর্বের মোট বাকি</span>
-          <strong id="hk-live-old-due" style="color: var(--google-red);">৳ 0.00</strong>
+      <div class="form-grid">
+        <div class="form-group span-full">
+          <label class="lang-node traditional-header-label" data-bn="খাতা টাইপ / কাস্টমার সার্চ ইঞ্জিন" data-en="Search Ledger Customer">কাস্টমার সার্চ</label>
+          <input type="text" id="hk-search-input" class="form-control" placeholder="খাতার কাস্টমার খুঁজতে নাম টাইপ করুন..." oninput="autoSearchHalkhataCust(this.value)">
+          <div id="hk-search-results" style="background:var(--bg-input); border: 1px solid var(--border-color); border-radius:var(--radius-sm); margin-top:6px; max-height:160px; overflow-y:auto; display:none;"></div>
         </div>
-        <div class="live-badge">
-          <span>হিসাব বিবরণী</span>
-          <strong id="hk-live-status-text" style="color: var(--text-muted);">কোনো ইনপুট নেই</strong>
+        
+        <input type="hidden" id="hk-cust-id" value="OUTSIDE-CUST">
+
+        <div class="form-group">
+          <label class="lang-node" data-bn="গ্রাহকের পূর্ণ নাম *" data-en="Customer Full Name *">গ্রাহকের নাম *</label>
+          <input type="text" id="hk-name" class="form-control" placeholder="নতুন নাম / সিলেক্ট নাম">
         </div>
+
+        <div class="form-group">
+          <label class="lang-node" data-bn="ঠিকানা / গ্রাম *" data-en="Address / Village *">ঠিকানা / গ্রাম *</label>
+          <input type="text" id="hk-address" class="form-control" placeholder="গ্রামের নাম">
+        </div>
+
+        <div class="form-group">
+          <label class="lang-node" data-bn="পিতার নাম" data-en="Father Name">পিতার নাম</label>
+          <input type="text" id="hk-father" class="form-control" placeholder="পিতার নাম">
+        </div>
+
+        <div class="form-group">
+          <label class="lang-node" data-bn="হালখাতা ক্যাশ জমা *" data-en="Halkhata Deposit Amount *">হালখাতা ক্যাশ জমা *</label>
+          <input type="number" id="hk-amount" class="form-control" placeholder="৳ 0" style="font-weight:700; color:var(--google-green);" oninput="calculateHalkhataLiveRemains()">
+        </div>
+
+        <div class="form-group span-full">
+          <div class="halkhata-live-reporter">
+            <div class="live-badge">
+              <span>পূর্বের মোট বাকি</span>
+              <strong id="hk-live-old-due" style="color: var(--google-red);">৳ 0</strong>
+            </div>
+            <div class="live-badge">
+              <span>হিসাব বিবরণী</span>
+              <strong id="hk-live-status-text" style="color: var(--text-muted);">কোনো ইনপুট নেই</strong>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div class="form-group">
-        <label class="lang-node" data-bn="ঠিকানা / গ্রাম *" data-en="Address / Village *">ঠিকানা / গ্রাম *</label>
-        <input type="text" id="hk-address" class="form-control" placeholder="গ্রামের নাম">
-      </div>
-      <div class="form-group">
-        <label class="lang-node" data-bn="পিতার নাম" data-en="Father Name">পিতার নাম</label>
-        <input type="text" id="hk-father" class="form-control" placeholder="পিতার নাম">
-      </div>
-      <div class="form-group">
-        <label class="lang-node" data-bn="হালখাতা ক্যাশ জমার পরিমাণ (টাকা) *" data-en="Halkhata Deposit Amount *">হালখাতা ক্যাশ জমার পরিমাণ (টাকা) *</label>
-        <input type="number" id="hk-amount" class="form-control" placeholder="৳ 0.00" style="font-weight:700; color:var(--google-green); font-size:16px;" oninput="calculateHalkhataLiveRemains()">
-      </div>
       <button class="btn" onclick="commitHalkhataPayment()" style="background:var(--halkhata-crimson); color: white;">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 11c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 2c0-3.31-2.69-6-6-6s-6 2.69-6 6c0 2.22 1.21 4.15 3 5.19l1-1.74c-1.19-.69-2-1.99-2-3.45 0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.46-.81 2.76-2 3.45l1 1.74c1.79-1.04 3-2.97 3-5.19z"/></svg>
         <span class="lang-node" data-bn="হালখাতা খতিয়ানে এন্ট্রি করুন" data-en="Submit to Halkhata Ledger">হালখাতা ক্যাশ এন্ট্রি করুন</span>
@@ -360,30 +373,33 @@
         <span class="lang-node" data-bn="ফোন বুক কন্টাক্ট থেকে সরাসরি আনুন" data-en="Import From Mobile Phonebook">ফোন বুক কন্টাক্ট থেকে সরাসরি আনুন</span>
       </button>
 
-      <div class="form-group">
-        <label class="lang-node" data-bn="গ্রাহকের নাম *" data-en="Customer Name *">গ্রাহকের নাম *</label>
-        <input type="text" id="ins-name" class="form-control" placeholder="নাম">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="lang-node" data-bn="গ্রাহকের নাম *" data-en="Customer Name *">গ্রাহকের নাম *</label>
+          <input type="text" id="ins-name" class="form-control" placeholder="নাম">
+        </div>
+        <div class="form-group">
+          <label class="lang-node" data-bn="মোবাইল নম্বর *" data-en="Mobile Number *">মোবাইল নম্বর *</label>
+          <input type="number" id="ins-mobile" class="form-control" placeholder="01xxxxxxxxx">
+        </div>
+        <div class="form-group">
+          <label class="lang-node" data-bn="গ্রামের নাম / ঠিকানা" data-en="Village Name / Address">গ্রামের নাম / ঠিকানা</label>
+          <input type="text" id="ins-village" class="form-control" placeholder="গ্রাম">
+        </div>
+        <div class="form-group">
+          <label class="lang-node" data-bn="পিতার নাম" data-en="Father's Name">পিতার নাম</label>
+          <input type="text" id="ins-father" class="form-control" placeholder="পিতার নাম">
+        </div>
+        <div class="form-group">
+          <label class="lang-node" data-bn="শুরুর পূর্বের বাকি পরিমাণ" data-en="Opening Due Balance">শুরুর পূর্বের বাকি</label>
+          <input type="number" id="ins-due" class="form-control" value="0">
+        </div>
+        <div class="form-group">
+          <label class="lang-node" data-bn="জিনিসের বিবরণ (চাল ধরণ)" data-en="Product Item Details">পণ্যের বিবরণ</label>
+          <input type="text" id="ins-details" class="form-control" placeholder="বিবরণ">
+        </div>
       </div>
-      <div class="form-group">
-        <label class="lang-node" data-bn="মোবাইল নম্বর *" data-en="Mobile Number *">মোবাইল নম্বর *</label>
-        <input type="number" id="ins-mobile" class="form-control" placeholder="01xxxxxxxxx">
-      </div>
-      <div class="form-group">
-        <label class="lang-node" data-bn="গ্রামের নাম / ঠিকানা" data-en="Village Name / Address">গ্রামের নাম / ঠিকানা</label>
-        <input type="text" id="ins-village" class="form-control" placeholder="গ্রাম">
-      </div>
-      <div class="form-group">
-        <label class="lang-node" data-bn="পিতার নাম" data-en="Father's Name">পিতার নাম</label>
-        <input type="text" id="ins-father" class="form-control" placeholder="পিতার নাম">
-      </div>
-      <div class="form-group">
-        <label class="lang-node" data-bn="শুরুর পূর্বের বাকি পরিমাণ (যদি থাকে)" data-en="Opening Due Balance">শুরুর পূর্বের বাকি পরিমাণ (যদি থাকে)</label>
-        <input type="number" id="ins-due" class="form-control" value="0">
-      </div>
-      <div class="form-group">
-        <label class="lang-node" data-bn="জিনিসের বিবরণ (যেমন: চাউল বস্তা সংখ্যা/ধরণ)" data-en="Product Item Details">জিনিসের বিবরণ (যেমন: চাউল বস্তা সংখ্যা/ধরণ)</label>
-        <input type="text" id="ins-details" class="form-control" placeholder="পণ্য সামগ্রীর বিবরণ">
-      </div>
+
       <button class="btn" onclick="executeFastCustomerSave()">
         <span class="lang-node" data-bn="⚡ ন্যানো সেকেন্ডে সেভ করুন" data-en="Save">সেভ করুন</span>
       </button>
@@ -400,14 +416,14 @@
       </div>
 
       <div style="background: var(--bg-input); padding:18px; border-radius:var(--radius-md); margin-bottom:20px; border:1px solid var(--border-color);">
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom:12px;">
           <input type="text" id="prof-name" class="form-control" style="font-weight:700; border-color:var(--google-blue);">
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
           <input type="number" id="prof-mobile" class="form-control" placeholder="মোবাইল">
           <input type="text" id="prof-village" class="form-control" placeholder="গ্রাম">
         </div>
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom:12px;">
           <input type="text" id="prof-father" class="form-control" placeholder="পিতার নাম">
         </div>
         <div style="display:flex; gap:10px;">
@@ -422,16 +438,16 @@
       </div>
 
       <h4 style="margin-bottom:12px; font-size:13px; text-transform:uppercase; color:var(--google-blue);" class="lang-node" data-bn="নতুন লেনদেন ও পণ্য এন্ট্রি করুন" data-en="New Transaction Posting">নতুন লেনদেন ও পণ্য এন্ট্রি করুন</h4>
-      <div class="form-group">
+      <div class="form-group" style="margin-bottom:12px;">
         <select id="tx-type" class="form-control">
           <option value="Due">🔴 বাকি (Due Product Purchase)</option>
           <option value="Deposit">🟢 নগদ জমা (Deposit Cash)</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="margin-bottom:12px;">
         <input type="text" id="tx-prod" class="form-control" placeholder="পণ্যের বিবরণ ও পরিমাণ (যেমন: ২ বস্তা চাল)">
       </div>
-      <div class="form-group">
+      <div class="form-group" style="margin-bottom:12px;">
         <input type="number" id="tx-amount" class="form-control" placeholder="টাকার পরিমাণ (৳)" style="font-weight:700;">
       </div>
       <button class="btn" style="margin-bottom:24px; background:var(--google-green); color:#000;" onclick="postNewTransaction()">লেনদেন নিশ্চিত করুন</button>
@@ -555,7 +571,35 @@
       registerPWA();
     });
 
-    // Premium Offline Storage and Dynamic Sync Manager Architecture
+    // Smart Floating Ticker Controller for Data Syncing Updates
+    function updateScrollingTicker(status, customMessage = "") {
+      const ticker = document.getElementById('offline-status-ticker');
+      const tickerText = document.getElementById('ticker-scrolling-content');
+      
+      if (status === "offline") {
+        ticker.style.display = 'block';
+        tickerText.innerHTML = "⚠️ আপনি বর্তমানে অফলাইন মোডে আছেন! আপনার এন্ট্রি করা সমস্ত ডাটা সুরক্ষিত আছে এবং ইন্টারনেট সংযোগ পাওয়ার সাথে সাথে গুগল শিটে অটো-আপডেট হয়ে যাবে।";
+      } else if (status === "syncing") {
+        ticker.style.display = 'block';
+        tickerText.innerHTML = "🔄 আপনার অফলাইন তথ্যগুলো গুগল শিটে আপডেট হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...";
+        tickerText.style.color = "var(--google-blue)";
+        ticker.style.background = "rgba(168, 199, 250, 0.15)";
+        ticker.style.borderColor = "var(--google-blue)";
+      } else if (status === "success") {
+        ticker.style.display = 'block';
+        tickerText.innerHTML = "✅ ধন্যবাদ! আপনার সমস্ত তথ্য গুগল শিটে সফলভাবে আপডেট হয়েছে।";
+        tickerText.style.color = "var(--google-green)";
+        ticker.style.background = "rgba(61, 213, 152, 0.15)";
+        ticker.style.borderColor = "var(--google-green)";
+        setTimeout(() => {
+          ticker.style.display = 'none';
+        }, 3000);
+      } else {
+        ticker.style.display = 'none';
+      }
+    }
+
+    // Offline Handling Storage Core
     function initAppOfflineEngine() {
       if(localStorage.getItem('naushin_db_cache')) {
         try {
@@ -564,19 +608,24 @@
         } catch(e) {}
       }
       
+      if (!localStorage.getItem('naushin_local_halkhata')) {
+        localStorage.setItem('naushin_local_halkhata', JSON.stringify([]));
+      }
+      
       const updateNetworkInterface = () => {
-        const ticker = document.getElementById('offline-status-ticker');
         if(navigator.onLine) {
-          ticker.style.display = 'none';
           processBackgroundSyncQueue();
         } else {
-          ticker.style.display = 'block';
+          updateScrollingTicker("offline");
         }
       };
 
       window.addEventListener('online', updateNetworkInterface);
       window.addEventListener('offline', updateNetworkInterface);
-      updateNetworkInterface();
+      
+      if(!navigator.onLine) {
+        updateScrollingTicker("offline");
+      }
     }
 
     function addJobToOfflineQueue(action, payload) {
@@ -588,7 +637,13 @@
     async function processBackgroundSyncQueue() {
       if(!navigator.onLine) return;
       let queue = JSON.parse(localStorage.getItem('naushin_sync_queue') || '[]');
-      if(queue.length === 0) return;
+      if(queue.length === 0) {
+        updateScrollingTicker("online-clear");
+        return;
+      }
+
+      // Trigger the requested marquee scrolling notice
+      updateScrollingTicker("syncing");
 
       for(let job of queue) {
         try {
@@ -599,16 +654,27 @@
             body: JSON.stringify({ action: job.action, payload: job.payload })
           });
         } catch(err) {
+          updateScrollingTicker("offline");
           return; 
         }
       }
+      
+      // Reset variables and remove offline statuses
       localStorage.setItem('naushin_sync_queue', '[]');
+      localStorage.setItem('naushin_local_halkhata', JSON.stringify([]));
+      
+      // Completion updates marquee scroll smoothly
+      updateScrollingTicker("success");
       syncBackendData();
+    }
+
+    // Format Money to Integer securely
+    function fmtAmt(val) {
+      return Math.round(parseFloat(val) || 0).toString();
     }
 
     async function apiRequest(action, payload = {}) {
       if(!navigator.onLine) {
-        // Handle Action simulation locally for absolute zero internet operations
         if(action === "saveCustomer") {
           let mockId = "OFFLINE-CUST-" + Date.now();
           let newRow = [mockId, payload.name, payload.mobile, payload.village, payload.fatherName, payload.prodDetails, parseFloat(payload.initialDue)||0, 0];
@@ -629,7 +695,32 @@
           return { status: 'success' };
         }
         if(action === "submitHalkhata") {
+          let c = dbState.customers.find(item => item[0] === payload.custId);
+          if(c) {
+            let amt = parseFloat(payload.amount) || 0;
+            c[6] = Math.max(0, (parseFloat(c[6]) || 0) - amt);
+            c[7] = (parseFloat(c[7]) || 0) + amt;
+          }
+          
+          // Capture and push Halkhata entry locally with PENDING status tag
+          let localHK = JSON.parse(localStorage.getItem('naushin_local_halkhata') || '[]');
+          localHK.push([
+            Date.now(), 
+            payload.custId, 
+            payload.custName, 
+            "", 
+            payload.fatherName, 
+            payload.address, 
+            payload.amount, 
+            "পেনন্ডিং (Pending)"
+          ]);
+          localStorage.setItem('naushin_local_halkhata', JSON.stringify(localHK));
+          
+          localStorage.setItem('naushin_db_cache', JSON.stringify(dbState));
           addJobToOfflineQueue(action, payload);
+          
+          // Re-render immediately locally
+          syncHalkhataLedger();
           return { status: 'success' };
         }
         return { status: 'offline' };
@@ -644,9 +735,7 @@
         });
         return await response.json();
       } catch (err) {
-        return new Promise((resolve) => {
-          google.script.run.withSuccessHandler(res => resolve(res))[action](payload);
-        });
+        return { status: 'error' };
       }
     }
 
@@ -667,14 +756,16 @@
       document.getElementById('tab-home').classList.toggle('active', target === 'home');
       document.getElementById('tab-halkhata').classList.toggle('active', target === 'halkhata');
       
-      // ড্যাশবোর্ড ক্লিক করলে কাস্টমার ফিল্টার বা সার্চ করা ডেটা রিসেট করে স্বাভাবিক অবস্থায় ফিরিয়ে আনা হবে
       if (target === 'home') {
         document.getElementById('search-core').value = '';
         amountSortState = 0;
         timelineSortState = 0;
         document.getElementById('btn-sort-amount').classList.remove('filter-active');
         document.getElementById('btn-sort-timeline').classList.remove('filter-active');
-        if (dbState && dbState.customers) {
+        
+        if (navigator.onLine) {
+          syncBackendData();
+        } else if (dbState && dbState.customers) {
           let sortedList = sortAlphabetically([...dbState.customers]);
           renderCustomerList(sortedList);
         }
@@ -708,7 +799,7 @@
 
     async function syncBackendData() {
       if(!navigator.onLine) {
-        renderDashboardStates(dbState);
+        if(dbState) renderDashboardStates(dbState);
         return;
       }
       const data = await apiRequest("getDashboard");
@@ -719,7 +810,6 @@
       }
     }
 
-    // Alphabetical sorter function that intelligently handles Bengali and English Unicode sorting rules
     function sortAlphabetically(custArray) {
       return custArray.sort((a, b) => {
         let nameA = (a[1] || "").toString().trim();
@@ -729,12 +819,24 @@
     }
 
     function renderDashboardStates(data) {
-      document.getElementById('val-totalDue').innerText = "৳ " + data.totalDue.toFixed(2);
-      document.getElementById('val-todayDue').innerText = "৳ " + data.todayDue.toFixed(2);
-      document.getElementById('val-todayDeposit').innerText = "৳ " + data.todayDeposit.toFixed(2);
-      document.getElementById('val-totalCust').innerText = data.totalCust;
-      document.getElementById('val-custWithDue').innerText = data.custWithDue;
-      document.getElementById('val-custNoDue').innerText = data.custNoDue;
+      if(!data) return;
+      
+      let tDue = 0, tDep = 0, cWithDue = 0, cNoDue = 0;
+      if(data.customers) {
+        data.customers.forEach(c => {
+          let due = parseFloat(c[6]) || 0;
+          tDue += due;
+          if(due > 0) cWithDue++;
+          else cNoDue++;
+        });
+      }
+
+      document.getElementById('val-totalDue').innerText = "৳ " + fmtAmt(data.totalDue !== undefined ? data.totalDue : tDue);
+      document.getElementById('val-todayDue').innerText = "৳ " + fmtAmt(data.todayDue || 0);
+      document.getElementById('val-todayDeposit').innerText = "৳ " + fmtAmt(data.todayDeposit || 0);
+      document.getElementById('val-totalCust').innerText = data.customers ? data.customers.length : (data.totalCust || 0);
+      document.getElementById('val-custWithDue').innerText = data.customers ? cWithDue : (data.custWithDue || 0);
+      document.getElementById('val-custNoDue').innerText = data.customers ? cNoDue : (data.custNoDue || 0);
 
       let sortedList = sortAlphabetically([...data.customers]);
       renderCustomerList(sortedList);
@@ -758,7 +860,7 @@
               <p><span>📱</span> ${c[2]} | <span>🏡</span> ${c[3]}</p>
             </div>
             <div class="cust-balance-status" style="color:${isDue ? 'var(--google-red)' : 'var(--google-green)'}">
-              ${isDue ? 'বাকি: ৳' + currentDue.toFixed(2) : 'পরিশোধ (0.00)'}
+              ${isDue ? 'বাকি: ৳' + fmtAmt(currentDue) : 'পরিশোধ (0)'}
             </div>
           </div>
         `;
@@ -842,12 +944,9 @@
         document.getElementById('ins-father').value = '';
         document.getElementById('ins-due').value = '0';
         document.getElementById('ins-details').value = '';
-        if(!navigator.onLine) {
-          alert("ডাটা অফলাইনে সংরক্ষণ করা হয়েছে!");
-          renderDashboardStates(dbState);
-        } else {
-          syncBackendData();
-        }
+        
+        alert("কাস্টমার অ্যাকাউন্ট সফলভাবে ডাটাবেসে সেভ হয়েছে!");
+        renderDashboardStates(dbState);
       } else {
         alert("ডাটা প্রসেস করা সম্ভব হয়নি!");
         if(document.getElementById('temp-row')) document.getElementById('temp-row').remove();
@@ -883,8 +982,8 @@
       document.getElementById('prof-village').value = c[3];
       document.getElementById('prof-father').value = c[4];
       
-      document.getElementById('prof-stat-due').innerText = "৳" + (parseFloat(c[6]) || 0).toFixed(2);
-      document.getElementById('prof-stat-dep').innerText = "৳" + (parseFloat(c[7]) || 0).toFixed(2);
+      document.getElementById('prof-stat-due').innerText = "৳" + fmtAmt(c[6]);
+      document.getElementById('prof-stat-dep').innerText = "৳" + fmtAmt(c[7]);
       
       document.getElementById('timeline-box').innerHTML = '<p style="color:var(--text-muted); padding:10px 0;">খতিয়ান লোড হচ্ছে...</p>';
       openModalWindow('modal-profile');
@@ -896,22 +995,24 @@
 
       let res = await apiRequest("getHistory", { id: id });
       let html = '';
-      if(res.history.length === 0) html = '<p style="color:var(--text-muted);font-size:12px;padding:10px 0;">কোনো ট্রানজেকশন ইতিহাস পাওয়া যায়নি।</p>';
-      res.history.forEach(h => {
-        let isDue = h.type === 'Due';
-        html += `
-          <div class="timeline-item ${isDue ? 'timeline-due' : 'timeline-dep'}">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="color: ${isDue ? 'var(--google-red)' : 'var(--google-green)'}; font-size:14px;">
-                ${isDue ? '🔴 খাতা বাকি' : '🟢 ক্যাশ জমা'} — ৳${h.amount.toFixed(2)}
-              </strong>
-              <span style="color:var(--text-muted); font-size:10px;">🕒 ${h.dateTime}</span>
+      if(!res.history || res.history.length === 0) html = '<p style="color:var(--text-muted);font-size:12px;padding:10px 0;">কোনো ট্রানজেকশন ইতিহাস পাওয়া যায়নি।</p>';
+      else {
+        res.history.forEach(h => {
+          let isDue = h.type === 'Due';
+          html += `
+            <div class="timeline-item ${isDue ? 'timeline-due' : 'timeline-dep'}">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color: ${isDue ? 'var(--google-red)' : 'var(--google-green)'}; font-size:14px;">
+                  ${isDue ? '🔴 খাতা বাকি' : '🟢 ক্যাশ জমা'} — ৳${fmtAmt(h.amount)}
+                </strong>
+                <span style="color:var(--text-muted); font-size:10px;">🕒 ${h.dateTime}</span>
+              </div>
+              <div style="color:var(--text-primary); font-size:12px; margin-top:4px; font-weight:500;">📦 বিবরণ: ${h.prodName}</div>
+              <div style="color:var(--text-muted); font-size:10px; margin-top:2px;">অবস্থা: ${h.status}</div>
             </div>
-            <div style="color:var(--text-primary); font-size:12px; margin-top:4px; font-weight:500;">📦 বিবরণ: ${h.prodName}</div>
-            <div style="color:var(--text-muted); font-size:10px; margin-top:2px;">অবস্থা: ${h.status}</div>
-          </div>
-        `;
-      });
+          `;
+        });
+      }
       document.getElementById('timeline-box').innerHTML = html;
     }
 
@@ -966,12 +1067,8 @@
       if(res.status === 'success') {
         document.getElementById('tx-prod').value = '';
         document.getElementById('tx-amount').value = '';
-        if(!navigator.onLine) {
-          alert("লেনদেনটি অফলাইনে যুক্ত করা হয়েছে!");
-          renderDashboardStates(dbState);
-        } else {
-          syncBackendData();
-        }
+        alert("লেনদেন সফলভাবে যুক্ত হয়েছে!");
+        renderDashboardStates(dbState);
       }
     }
 
@@ -990,7 +1087,7 @@
       let sortedMatches = sortAlphabetically(matches);
       sortedMatches.forEach(m => {
         let currentDue = parseFloat(m[6]) || 0;
-        html += `<div style="padding:12px; cursor:pointer; border-bottom:1px solid var(--border-color); font-size:13px;" onclick="selectHalkhataCustomer('${m[0]}','${m[1]}','${m[3]}','${m[4]}', ${currentDue})">👤 ${m[1]} [${m[2]}] (বাকি: ৳${currentDue.toFixed(2)})</div>`;
+        html += `<div style="padding:12px; cursor:pointer; border-bottom:1px solid var(--border-color); font-size:13px;" onclick="selectHalkhataCustomer('${m[0]}','${m[1]}','${m[3]}','${m[4]}', ${currentDue})">👤 ${m[1]} [${m[2]}] (বাকি: ৳${fmtAmt(currentDue)})</div>`;
       });
       container.innerHTML = html;
       container.style.display = 'block';
@@ -1005,7 +1102,7 @@
       document.getElementById('hk-search-results').style.display = 'none';
       
       currentHalkhataSelectedDue = dueAmount;
-      document.getElementById('hk-live-old-due').innerText = "৳ " + dueAmount.toFixed(2);
+      document.getElementById('hk-live-old-due').innerText = "৳ " + fmtAmt(dueAmount);
       calculateHalkhataLiveRemains();
     }
 
@@ -1028,10 +1125,10 @@
         statusBox.innerText = "পুরোপুরি পরিশোধ";
         statusBox.style.color = "var(--google-green)";
       } else if (calculation < 0) {
-        statusBox.innerText = "জমা অতিরিক্ত: ৳" + Math.abs(calculation).toFixed(2);
+        statusBox.innerText = "জমা অতিরিক্ত: ৳" + fmtAmt(Math.abs(calculation));
         statusBox.style.color = "var(--google-blue)";
       } else {
-        statusBox.innerText = "বাকি থাকবে: ৳" + calculation.toFixed(2);
+        statusBox.innerText = "বাকি থাকবে: ৳" + fmtAmt(calculation);
         statusBox.style.color = "var(--google-red)";
       }
     }
@@ -1039,7 +1136,7 @@
     function resetHalkhataLiveFields() {
       document.getElementById('hk-cust-id').value = "OUTSIDE-CUST";
       currentHalkhataSelectedDue = 0;
-      document.getElementById('hk-live-old-due').innerText = "৳ 0.00";
+      document.getElementById('hk-live-old-due').innerText = "৳ 0";
       document.getElementById('hk-live-status-text').innerText = "কোনো ইনপুট নেই";
       document.getElementById('hk-live-status-text').style.color = "var(--text-muted)";
     }
@@ -1057,33 +1154,57 @@
       
       let res = await apiRequest("submitHalkhata", p);
       if(res.status === 'success') {
-        alert("শুভ হালখাতা এন্ট্রি সফল হয়েছে!");
+        alert("সফল হয়েছে");
         document.getElementById('hk-search-input').value = '';
         document.getElementById('hk-name').value = '';
         document.getElementById('hk-address').value = '';
         document.getElementById('hk-father').value = '';
         document.getElementById('hk-amount').value = '';
         resetHalkhataLiveFields();
-        syncBackendData();
+        renderDashboardStates(dbState);
       }
     }
 
     async function syncHalkhataLedger() {
-      if(!navigator.onLine) return; 
-      let res = await apiRequest("getHalkhata");
+      let combinedRows = [];
+      
+      // First gather local pending entries if they exist
+      let localHK = JSON.parse(localStorage.getItem('naushin_local_halkhata') || '[]');
+      localHK.forEach(row => {
+        combinedRows.push(row);
+      });
+
+      if(navigator.onLine) {
+        let res = await apiRequest("getHalkhata");
+        if(res && res.rows) {
+          res.rows.forEach(r => {
+            // Avoid duplicate loading if same item exists
+            if (!localHK.some(l => l[1] === r[1] && l[6] == r[6])) {
+              combinedRows.push(r);
+            }
+          });
+        }
+      }
+      
       let html = '';
       let cashPool = 0;
-      if(res.rows && res.rows.length > 0) {
-        res.rows.forEach((r, idx) => {
+      
+      if(combinedRows.length > 0) {
+        combinedRows.forEach((r, idx) => {
           cashPool += parseFloat(r[6]) || 0;
+          let isPending = r[7] === "পেনन्ডিং (Pending)";
+          let statusBadgeStyle = isPending 
+            ? "background:rgba(255,159,67,0.15); color:var(--orange-warn);" 
+            : "background:rgba(61,213,152,0.15); color:var(--google-green);";
+            
           html += `
             <tr>
               <td>${idx + 1}</td>
               <td><strong>${r[2]}</strong></td>
               <td>${r[4] || 'N/A'}</td>
               <td>${r[5] || 'N/A'}</td>
-              <td style="color:var(--google-green); font-weight:700;">৳${parseFloat(r[6]).toFixed(2)}</td>
-              <td><span style="background:rgba(61,213,152,0.15); color:var(--google-green); padding:4px 8px; border-radius:4px; font-size:11px; font-weight:700;">${r[7]}</span></td>
+              <td style="color:var(--google-green); font-weight:700;">৳${fmtAmt(r[6])}</td>
+              <td><span style="${statusBadgeStyle} padding:4px 8px; border-radius:4px; font-size:11px; font-weight:700;">${r[7]}</span></td>
             </tr>
           `;
         });
@@ -1091,7 +1212,7 @@
         html = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">হালখাতার কোনো রেকর্ড এন্ট্রি নেই</td></tr>`;
       }
       document.getElementById('halkhata-rows-target').innerHTML = html;
-      document.getElementById('hk-pool-counter').innerText = "সর্বমোট হালখাতা কালেকশন: ৳" + cashPool.toFixed(2);
+      document.getElementById('hk-pool-counter').innerText = "সর্বমোট হালখাতা কালেকশন: ৳" + fmtAmt(cashPool);
     }
 
     async function openProfitLossModal() {
@@ -1106,6 +1227,7 @@
     }
 
     function renderChartByFilter(filterType) {
+      if(!cachedAnalyticsData) return;
       document.querySelectorAll('.chart-btn').forEach(b => b.classList.remove('active'));
       if(filterType === 'weekly') document.getElementById('btn-chart-wk').classList.add('active');
       if(filterType === 'monthly') document.getElementById('btn-chart-mo').classList.add('active');
@@ -1192,60 +1314,71 @@
       }
     }
 
+    // Advanced Modern Service Worker Architecture for 100% Offline App Booting
     function registerPWA() {
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          // Native absolute offline performance improvement architecture
           const swCode = `
-            const CACHE_NAME = 'naushin-v3';
+            const CACHE_NAME = 'naushin-store-v4';
             const ASSETS = [
               './',
               './index.html',
               'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap',
               'https://cdn.jsdelivr.net/npm/chart.js'
             ];
+            
             self.addEventListener('install', e => {
               e.waitUntil(
                 caches.open(CACHE_NAME).then(cache => {
-                  return Promise.all(
-                    ASSETS.map(url => {
-                      return fetch(url).then(response => {
-                        if (response.ok) return cache.put(url, response);
-                        return Promise.resolve();
-                      }).catch(() => Promise.resolve());
-                    })
-                  );
+                  return cache.addAll(ASSETS);
                 })
               );
               self.skipWaiting();
             });
+            
             self.addEventListener('activate', e => {
-              e.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE_NAME && caches.delete(k)))));
+              e.waitUntil(
+                caches.keys().then(keys => Promise.all(
+                  keys.map(k => k !== CACHE_NAME && caches.delete(k))
+                ))
+              );
               self.clients.claim();
             });
+            
             self.addEventListener('fetch', e => {
               if (e.request.method !== 'GET') return;
+              
               e.respondWith(
                 caches.match(e.request).then(cachedRes => {
-                  const fetchPromise = fetch(e.request).then(fetchRes => {
-                    if (fetchRes && fetchRes.status === 200 && e.request.url.startsWith('http')) {
-                      const resClone = fetchRes.clone();
+                  if (cachedRes) {
+                    fetch(e.request).then(networkRes => {
+                      if(networkRes.status === 200) {
+                        caches.open(CACHE_NAME).then(cache => cache.put(e.request, networkRes));
+                      }
+                    }).catch(() => {/* Ignore network errors */});
+                    
+                    return cachedRes;
+                  }
+                  
+                  return fetch(e.request).then(networkRes => {
+                    if (networkRes && networkRes.status === 200 && e.request.url.startsWith('http')) {
+                      const resClone = networkRes.clone();
                       caches.open(CACHE_NAME).then(cache => cache.put(e.request, resClone));
                     }
-                    return fetchRes;
-                  }).catch(() => null);
-                  return cachedRes || fetchPromise || new Response("Offline Content Secure");
+                    return networkRes;
+                  }).catch(() => {
+                    return new Response("Offline Secure Channel Active");
+                  });
                 })
               );
             });
           `;
           
-          // Absolute Networkless Entry Policy Fix
           const blob = new Blob([swCode], { type: 'application/javascript' });
           const swUrl = URL.createObjectURL(blob);
           navigator.serviceWorker.register(swUrl).then(reg => {
-            console.log('SW Active Mode Secured');
-          }).catch(err => console.log('SW failed', err));
+            console.log('App PWA Cache Strategy Activated Successfully.');
+          }).catch(err => console.log('SW registration failed', err));
         });
       }
     }
