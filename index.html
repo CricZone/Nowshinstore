@@ -666,6 +666,19 @@
       document.getElementById('view-halkhata').style.display = (target === 'halkhata') ? 'block' : 'none';
       document.getElementById('tab-home').classList.toggle('active', target === 'home');
       document.getElementById('tab-halkhata').classList.toggle('active', target === 'halkhata');
+      
+      // ড্যাশবোর্ড ক্লিক করলে কাস্টমার ফিল্টার বা সার্চ করা ডেটা রিসেট করে স্বাভাবিক অবস্থায় ফিরিয়ে আনা হবে
+      if (target === 'home') {
+        document.getElementById('search-core').value = '';
+        amountSortState = 0;
+        timelineSortState = 0;
+        document.getElementById('btn-sort-amount').classList.remove('filter-active');
+        document.getElementById('btn-sort-timeline').classList.remove('filter-active');
+        if (dbState && dbState.customers) {
+          let sortedList = sortAlphabetically([...dbState.customers]);
+          renderCustomerList(sortedList);
+        }
+      }
     }
 
     function openModalWindow(id) { document.getElementById(id).style.display = 'flex'; }
@@ -1182,9 +1195,9 @@
     function registerPWA() {
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          // Robust caching mechanism for absolute native app offline behavior
+          // Native absolute offline performance improvement architecture
           const swCode = `
-            const CACHE_NAME = 'naushin-v2';
+            const CACHE_NAME = 'naushin-v3';
             const ASSETS = [
               './',
               './index.html',
@@ -1192,28 +1205,47 @@
               'https://cdn.jsdelivr.net/npm/chart.js'
             ];
             self.addEventListener('install', e => {
-              e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
+              e.waitUntil(
+                caches.open(CACHE_NAME).then(cache => {
+                  return Promise.all(
+                    ASSETS.map(url => {
+                      return fetch(url).then(response => {
+                        if (response.ok) return cache.put(url, response);
+                        return Promise.resolve();
+                      }).catch(() => Promise.resolve());
+                    })
+                  );
+                })
+              );
               self.skipWaiting();
             });
             self.addEventListener('activate', e => {
               e.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE_NAME && caches.delete(k)))));
+              self.clients.claim();
             });
             self.addEventListener('fetch', e => {
+              if (e.request.method !== 'GET') return;
               e.respondWith(
                 caches.match(e.request).then(cachedRes => {
-                  return cachedRes || fetch(e.request).then(fetchRes => {
-                    return caches.open(CACHE_NAME).then(cache => {
-                      if(e.request.url.startsWith('http')) cache.put(e.request, fetchRes.clone());
-                      return fetchRes;
-                    });
-                  }).catch(() => new Response("Offline Mode Secured"));
+                  const fetchPromise = fetch(e.request).then(fetchRes => {
+                    if (fetchRes && fetchRes.status === 200 && e.request.url.startsWith('http')) {
+                      const resClone = fetchRes.clone();
+                      caches.open(CACHE_NAME).then(cache => cache.put(e.request, resClone));
+                    }
+                    return fetchRes;
+                  }).catch(() => null);
+                  return cachedRes || fetchPromise || new Response("Offline Content Secure");
                 })
               );
             });
           `;
+          
+          // Absolute Networkless Entry Policy Fix
           const blob = new Blob([swCode], { type: 'application/javascript' });
           const swUrl = URL.createObjectURL(blob);
-          navigator.serviceWorker.register(swUrl).catch(err => console.log('SW registration failed', err));
+          navigator.serviceWorker.register(swUrl).then(reg => {
+            console.log('SW Active Mode Secured');
+          }).catch(err => console.log('SW failed', err));
         });
       }
     }
